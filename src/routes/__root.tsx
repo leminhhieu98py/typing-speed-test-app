@@ -1,9 +1,9 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { HeaderComponent } from '../components/common';
+import { HeaderComponent } from '@/components/common';
 import { Theme } from '@radix-ui/themes';
 import { useState } from 'react';
-import type { TRadixTheme } from '../types/radix.type';
+import type { TRadixTheme } from '@typing/radix';
 
 export const Route = createRootRoute({
   component: RootComponent,

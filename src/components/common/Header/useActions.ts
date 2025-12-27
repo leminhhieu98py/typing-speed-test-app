@@ -1,4 +1,4 @@
-import type { TRadixTheme } from '../../../types/radix.type';
+import type { TRadixTheme } from '@typing/radix';
 import type { Dispatch, SetStateAction } from 'react';
 
 type ActionsProps = {

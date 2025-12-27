@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import type { TRadixTheme } from '../../../types/radix.type';
+import type { TRadixTheme } from '@typing/radix';
 import { useActions } from './useActions';
 import type { Dispatch, SetStateAction } from 'react';
 
