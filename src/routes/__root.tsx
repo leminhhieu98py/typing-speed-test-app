@@ -10,10 +10,16 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
-  const [theme, setTheme] = useState<TRadixTheme>('dark');
+  const [theme, setTheme] = useState<TRadixTheme>('light');
   return (
     <>
-      <Theme appearance={theme}>
+      <Theme
+        appearance={theme}
+        accentColor='green'
+        grayColor='slate'
+        radius='full'
+        scaling='90%'
+      >
         <HeaderComponent
           theme={theme}
           setTheme={setTheme}

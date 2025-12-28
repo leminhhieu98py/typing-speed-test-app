@@ -7,6 +7,7 @@
       "dependencies": {
         "@radix-ui/themes": "^3.2.1",
         "@tanstack/react-router": "^1.143.6",
+        "diff": "^8.0.2",
         "react": "^19.2.3",
         "react-dom": "^19.2.3",
       },
