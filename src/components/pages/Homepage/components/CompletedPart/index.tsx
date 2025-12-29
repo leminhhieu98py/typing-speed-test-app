@@ -14,7 +14,7 @@ const CompletedPart = ({ originalText, inputtedText }: TCompletedPartProps) => {
     <Text
       as='span'
       color='green'
-      style={{ marginRight: 8 }}
+      style={{ marginRight: completedTextRecord.length > 0 ? 8 : 0 }}
     >
       {completedTextRecord.map((record, index) => {
         const character = getStyledCharacter(record);

@@ -5,8 +5,14 @@ export enum EDuration {
   '120_SECONDS' = 120,
 }
 
+export enum EMode {
+  EASY = 'EASY',
+  MEDIUM = 'MEDIUM',
+  HARD = 'HARD',
+}
+
 export enum ETextCategory {
-  'QUOTES' = 'QUOTES',
-  //   'STORIES' = 'STORIES',
-  //   'LYRICS' = 'LYRICS',
+  CLASSIC = 'CLASSIC',
+  RHETORIC = 'RHETORIC',
+  SCIENCE = 'SCIENCE',
 }
