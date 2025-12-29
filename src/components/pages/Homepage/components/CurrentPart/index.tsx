@@ -32,6 +32,7 @@ const CurrentPart = ({
         onKeyUp={handleInputKeyUp}
         style={{ position: 'absolute', opacity: 0, height: 0, width: 0, cursor: 'none' }}
         maxLength={originalText.length}
+        onPaste={(e) => e.preventDefault()}
       />
       <Text
         as='span'
