@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import CompletedPart from '../CompletedPart';
 import CurrentPart from '../CurrentPart';
 import RemainPart from '../RemainPart';
@@ -7,7 +8,7 @@ type TTypingAreaProps = {
   text: string;
 };
 
-const TypingArea = ({ text }: TTypingAreaProps) => {
+const TypingArea = memo(({ text }: TTypingAreaProps) => {
   const {
     inputRef,
     handleContainerClick,
@@ -39,6 +40,6 @@ const TypingArea = ({ text }: TTypingAreaProps) => {
       <RemainPart text={remainText} />
     </div>
   );
-};
+});
 
 export default TypingArea;
