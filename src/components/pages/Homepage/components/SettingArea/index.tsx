@@ -29,7 +29,10 @@ const SettingArea = ({
 }: TSettingAreaProps) => {
   return (
     <Section py={{ sm: '1rem', md: '2rem' }}>
-      <Card>
+      <Card
+        variant='ghost'
+        style={{ boxShadow: 'var(--shadow-3)', margin: 0 }}
+      >
         <Box mb={{ sm: '5', md: '6', lg: '7' }}>
           <Flex
             gap='2'
@@ -62,7 +65,7 @@ const SettingArea = ({
             >
               <Text
                 as='label'
-                size={{ sm: '2', md: '3', lg: '4' }}
+                size={{ sm: '1', md: '2', lg: '3' }}
                 color='gray'
               >
                 <Flex
@@ -111,7 +114,7 @@ const SettingArea = ({
                 >
                   <Text
                     as='label'
-                    size={{ sm: '2', md: '3', lg: '4' }}
+                    size={{ sm: '1', md: '2', lg: '3' }}
                     color='gray'
                   >
                     Duration
@@ -148,7 +151,7 @@ const SettingArea = ({
               >
                 <Text
                   as='label'
-                  size={{ sm: '2', md: '3', lg: '4' }}
+                  size={{ sm: '1', md: '2', lg: '3' }}
                   color='gray'
                 >
                   Difficulty
@@ -175,7 +178,7 @@ const SettingArea = ({
               >
                 <Text
                   as='label'
-                  size={{ sm: '2', md: '3', lg: '4' }}
+                  size={{ sm: '1', md: '2', lg: '3' }}
                   color='gray'
                 >
                   Category
