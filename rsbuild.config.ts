@@ -21,4 +21,7 @@ export default defineConfig({
   source: {
     tsconfigPath: './tsconfig.json',
   },
+  html: {
+    title: 'Just type',
+  },
 });
