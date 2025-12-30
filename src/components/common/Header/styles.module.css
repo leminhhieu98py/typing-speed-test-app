@@ -1,0 +1,12 @@
+.header {
+  padding: var(--space-3);
+  box-shadow: var(--shadow-3);
+}
+
+.headerLogo {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-2);
+  max-width: var(--space-6);
+  max-height: var(--space-6);
+}

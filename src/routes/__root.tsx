@@ -15,10 +15,9 @@ function RootComponent() {
     <>
       <Theme
         appearance={theme}
-        accentColor='green'
+        accentColor='grass'
         grayColor='slate'
-        radius='full'
-        scaling='90%'
+        radius='large'
       >
         <HeaderComponent
           theme={theme}
