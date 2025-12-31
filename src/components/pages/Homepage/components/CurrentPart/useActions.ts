@@ -1,7 +1,8 @@
-import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 
 type TActionsProps = {
   inputRef: React.RefObject<HTMLInputElement | null>;
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
   setCurrentWordIndex: Dispatch<SetStateAction<number>>;
   setInputtedText: Dispatch<SetStateAction<string>>;
   originalText: string;
@@ -10,12 +11,14 @@ type TActionsProps = {
 
 export const useActions = ({
   inputRef,
+  scrollContainerRef,
   setCurrentWordIndex,
   setInputtedText,
   originalText,
   isLimited,
 }: TActionsProps) => {
   const [inputValue, setInputValue] = useState('');
+  const spanRef = useRef<HTMLSpanElement>(null);
 
   const handleInputKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const character = event.key;
@@ -49,5 +52,17 @@ export const useActions = ({
     };
   }, [inputRef]);
 
-  return { inputRef, inputValue, handleInputKeyUp };
+  useEffect(() => {
+    if (spanRef.current && scrollContainerRef.current) {
+      const spanTop = spanRef.current.offsetTop - scrollContainerRef.current.offsetTop;
+      const offsetTop = 40;
+
+      scrollContainerRef.current.scrollTo({
+        top: spanTop - offsetTop,
+        behavior: 'instant',
+      });
+    }
+  }, [spanRef, scrollContainerRef, originalText]);
+
+  return { inputRef, inputValue, handleInputKeyUp, spanRef };
 };

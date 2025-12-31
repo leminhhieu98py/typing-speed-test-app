@@ -3,6 +3,7 @@ import CompletedPart from '../CompletedPart';
 import CurrentPart from '../CurrentPart';
 import RemainPart from '../RemainPart';
 import { useActions } from './useActions';
+import { Card, ScrollArea, Section } from '@radix-ui/themes';
 
 type TTypingAreaProps = {
   text: string;
@@ -19,26 +20,37 @@ const TypingArea = memo(({ text }: TTypingAreaProps) => {
     setCurrentWordIndex,
     setInputtedText,
     isLimited,
+    scrollContainerRef,
   } = useActions({ text });
 
   return (
-    <div
-      onClick={handleContainerClick}
-      style={{ border: '1px solid red', padding: 20, height: 600, margin: 20 }}
-    >
-      <CompletedPart
-        originalText={completedText}
-        inputtedText={inputtedText}
-      />
-      <CurrentPart
-        inputRef={inputRef}
-        setCurrentWordIndex={setCurrentWordIndex}
-        setInputtedText={setInputtedText}
-        originalText={currentText}
-        isLimited={isLimited}
-      />
-      <RemainPart text={remainText} />
-    </div>
+    <Section onClick={handleContainerClick}>
+      <Card
+        variant='ghost'
+        style={{ boxShadow: 'var(--shadow-3)', margin: 0, padding: '1rem', textAlign: 'justify' }}
+      >
+        <ScrollArea
+          ref={scrollContainerRef}
+          type='always'
+          scrollbars='vertical'
+          style={{ height: '26rem', padding: '1rem' }}
+        >
+          <CompletedPart
+            originalText={completedText}
+            inputtedText={inputtedText}
+          />
+          <CurrentPart
+            inputRef={inputRef}
+            scrollContainerRef={scrollContainerRef}
+            setCurrentWordIndex={setCurrentWordIndex}
+            setInputtedText={setInputtedText}
+            originalText={currentText}
+            isLimited={isLimited}
+          />
+          <RemainPart text={remainText} />
+        </ScrollArea>
+      </Card>
+    </Section>
   );
 });
 

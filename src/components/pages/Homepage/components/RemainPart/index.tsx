@@ -10,7 +10,7 @@ const RemainPart = ({ text }: TRemainPartProps) => {
 
   return (
     <Text
-      as='span'
+      size='8'
       color='gray'
     >
       {text}

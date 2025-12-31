@@ -32,6 +32,7 @@ const getTextForEachPart = (
 
 export const useActions = ({ text }: TActionsProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [inputtedText, setInputtedText] = useState('');
   const { completedText, currentText, remainText } = getTextForEachPart(text, currentWordIndex);
@@ -58,5 +59,6 @@ export const useActions = ({ text }: TActionsProps) => {
     setCurrentWordIndex,
     setInputtedText,
     isLimited,
+    scrollContainerRef,
   };
 };

@@ -12,25 +12,27 @@ const CompletedPart = ({ originalText, inputtedText }: TCompletedPartProps) => {
 
   return (
     <Text
-      as='span'
       color='green'
-      style={{ marginRight: completedTextRecord.length > 0 ? 8 : 0 }}
+      size='8'
     >
       {completedTextRecord.map((record, index) => {
         const character = getStyledCharacter(record);
 
         return (
-          character && (
-            <Text
-              key={index}
-              as='span'
-              color={character.color}
-            >
-              {character.value}
-            </Text>
-          )
+          <>
+            {character && (
+              <Text
+                key={index}
+                as='span'
+                color={character.color}
+              >
+                {character.value}
+              </Text>
+            )}
+          </>
         );
       })}
+      {completedTextRecord.length > 0 && ' '}
     </Text>
   );
 };
