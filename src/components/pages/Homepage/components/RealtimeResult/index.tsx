@@ -10,17 +10,15 @@ type TRealtimeResultProps = {
 
 const RealtimeResult = ({ wpm, accuracy, count }: TRealtimeResultProps) => {
   return (
-    <Section
-      py={{ sm: '1rem', md: '2rem' }}
-      pt={'0'}
-    >
+    <Section py='0'>
       <Card
         variant='ghost'
         style={{ backgroundColor: 'var(--green-3)', margin: 0, boxShadow: 'var(--shadow-3)' }}
       >
         <Flex
-          justify='between'
-          align='center'
+          direction='column'
+          align='start'
+          gapY='1rem'
         >
           <RealtimeStats
             wpm={wpm}

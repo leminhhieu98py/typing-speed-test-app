@@ -11,7 +11,6 @@ const Countdown = ({ count }: TCountdownProps) => {
       <Flex
         direction='column'
         gap='1'
-        align='end'
       >
         <Text
           color='gray'

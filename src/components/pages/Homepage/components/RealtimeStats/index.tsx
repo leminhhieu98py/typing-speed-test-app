@@ -12,25 +12,25 @@ const RealtimeStats = ({ wpm, accuracy }: TRealtimeStatsProps) => {
         <Flex
           direction='column'
           gap='1'
-          width='5rem'
+          width='9rem'
         >
           <Text
             color='gray'
             size={{ sm: '1', md: '2', lg: '3' }}
           >
-            {Math.floor(wpm)}
+            WPM
           </Text>
           <Text
             color='green'
             size='6'
           >
-            <Strong>0</Strong>
+            <Strong> {Math.floor(wpm)}</Strong>
           </Text>
         </Flex>
         <Flex
           direction='column'
           gap='1'
-          width='5rem'
+          width='9rem'
         >
           <Text
             color='gray'

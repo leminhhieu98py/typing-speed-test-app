@@ -23,12 +23,15 @@ type TSettingAreaProps = {
 const SettingArea = memo(
   ({ mode, setMode, setDuration, setTextCategory, setDifficulty }: TSettingAreaProps) => {
     return (
-      <Section py={{ sm: '1rem', md: '2rem' }}>
+      <Section
+        py='0'
+        flexGrow='1'
+      >
         <Card
           variant='ghost'
           style={{ boxShadow: 'var(--shadow-3)', margin: 0 }}
         >
-          <Box mb={{ sm: '5', md: '6', lg: '7' }}>
+          <Box mb={{ sm: '3', md: '4', lg: '5' }}>
             <Flex
               gap='2'
               align='center'
@@ -48,7 +51,7 @@ const SettingArea = memo(
               </Heading>
             </Flex>
           </Box>
-          <Box mb={{ sm: '3', md: '4', lg: '5' }}>
+          <Box mb={{ sm: '2', md: '3', lg: '4' }}>
             <Flex
               gap={{ sm: '3', md: '6', lg: '10' }}
               justify='between'
@@ -94,7 +97,6 @@ const SettingArea = memo(
             <Flex
               gapX={{ sm: '3rem', md: '4rem' }}
               gapY='1rem'
-              justify='between'
               wrap='wrap'
             >
               {mode === Emode.TIME && (
