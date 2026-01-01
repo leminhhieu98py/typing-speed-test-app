@@ -11,10 +11,7 @@ const CompletedPart = ({ originalText, inputtedText }: TCompletedPartProps) => {
   const { completedTextRecord } = useActions({ originalText, inputtedText });
 
   return (
-    <Text
-      color='green'
-      size='8'
-    >
+    <Text size='8'>
       {completedTextRecord.map((record, index) => {
         const character = getStyledCharacter(record);
 

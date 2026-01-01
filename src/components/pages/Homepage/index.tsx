@@ -30,7 +30,10 @@ export const HomePage = () => {
           count={count}
         />
       </Flex>
-      <TypingArea text={text} />
+      <TypingArea
+        text={text}
+        key={text}
+      />
     </Section>
   );
 };
