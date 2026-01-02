@@ -10,7 +10,7 @@ export const useActions = () => {
   const [duration, setDuration] = useState(EDuration['60_SECONDS']);
   const [textCategory, setTextCategory] = useState(ETextCategory.CLASSIC);
   const [difficulty, setDifficulty] = useState(EDifficulty.MEDIUM);
-  const [count, { startCountdown }] = useCountdown({
+  const [count, { startCountdown, resetCountdown }] = useCountdown({
     countStart: Number(duration),
     intervalMs: 1000,
   });
@@ -44,16 +44,6 @@ export const useActions = () => {
     inputRef.current?.focus();
   };
 
-  const stopTyping = () => {
-    inputRef.current?.blur();
-
-    // TODO: handle more logic here
-  };
-
-  if (isTimeup) {
-    setIsStarted(false);
-  }
-
   useEffect(() => {
     if (mode === Emode.TIME && isTyping && typedChars === 1 && count === Number(duration)) {
       startCountdown();
@@ -62,9 +52,13 @@ export const useActions = () => {
 
   useEffect(() => {
     if (isTimeup) {
-      stopTyping();
+      inputRef.current?.blur();
     }
-  }, [isTimeup]);
+  }, [isTimeup, inputRef]);
+
+  useEffect(() => {
+    resetCountdown();
+  }, [duration, resetCountdown]);
 
   return {
     text,
