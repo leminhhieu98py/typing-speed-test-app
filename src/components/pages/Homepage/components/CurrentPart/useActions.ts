@@ -27,6 +27,7 @@ export const useActions = ({
   const spanRef = useRef<HTMLSpanElement>(null);
 
   const handleBeforeInput = (event: React.FormEvent<HTMLInputElement>) => {
+    if (inputValue.length >= originalText.length) return;
     const inputEvent = event.nativeEvent as InputEvent & { code: string };
     const character = inputEvent.code === 'Space' ? ' ' : inputEvent.data;
 

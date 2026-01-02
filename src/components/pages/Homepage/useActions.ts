@@ -24,13 +24,13 @@ export const useActions = () => {
   const wpm = useMemo(() => {
     const timeElapsedInSeconds = Number(duration) - count;
     const timeElapsedInMinutes = timeElapsedInSeconds / 60 || 1;
-    const netWPM = (typedChars / 5 - incorrectChars) / timeElapsedInMinutes;
+    const netWPM = (typedChars - incorrectChars) / (5 * timeElapsedInMinutes);
 
     return Math.max(0, Math.round(netWPM));
   }, [count, duration, incorrectChars, typedChars]);
 
   const accuracy = useMemo(
-    () => ((typedChars - incorrectChars) / typedChars) * 100,
+    () => ((typedChars - incorrectChars) / (typedChars || 1)) * 100,
     [typedChars, incorrectChars]
   );
 
