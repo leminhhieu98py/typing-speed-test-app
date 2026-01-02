@@ -7,6 +7,8 @@ type TCountdownProps = {
 };
 
 const Countdown = memo(({ count }: TCountdownProps) => {
+  const isWarning = count <= 10;
+
   return (
     <Box>
       <Flex
@@ -20,9 +22,9 @@ const Countdown = memo(({ count }: TCountdownProps) => {
           Time Remaining
         </Text>
         <Text
-          color='gray'
+          color={isWarning ? 'red' : 'gray'}
           size='6'
-          highContrast
+          highContrast={!isWarning}
         >
           <Strong>{secondsToMMSS(count)}</Strong>
         </Text>
