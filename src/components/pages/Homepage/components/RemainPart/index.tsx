@@ -11,7 +11,7 @@ const RemainPart = ({ text }: TRemainPartProps) => {
   return (
     <Text
       size='8'
-      color='gray'
+      style={{ color: 'var(--gray-6)' }}
     >
       {text}
     </Text>
