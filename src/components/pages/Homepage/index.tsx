@@ -17,6 +17,9 @@ export const HomePage = () => {
     count,
     setTypedChars,
     setIncorrectChars,
+    isTyping,
+    startTyping,
+    inputRef,
   } = useActions();
 
   return (
@@ -34,6 +37,7 @@ export const HomePage = () => {
           setDuration={setDuration}
           setTextCategory={setTextCategory}
           setDifficulty={setDifficulty}
+          isTyping={isTyping}
         />
         <RealtimeResult
           wpm={wpm}
@@ -42,10 +46,13 @@ export const HomePage = () => {
         />
       </Flex>
       <TypingArea
+        inputRef={inputRef}
         text={text}
         key={text}
         setTypedChars={setTypedChars}
         setIncorrectChars={setIncorrectChars}
+        startTyping={startTyping}
+        isTyping={isTyping}
       />
     </Section>
   );

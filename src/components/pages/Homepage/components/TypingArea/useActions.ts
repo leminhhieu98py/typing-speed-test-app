@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type RefObject } from 'react';
 
 type TActionsProps = {
   text: string;
+  isTyping: boolean;
+  inputRef: RefObject<HTMLInputElement | null>;
 };
 
 const getTextForEachPart = (
@@ -30,14 +32,14 @@ const getTextForEachPart = (
   };
 };
 
-export const useActions = ({ text }: TActionsProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+export const useActions = ({ text, inputRef, isTyping }: TActionsProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [inputtedText, setInputtedText] = useState('');
   const { completedText, currentText, remainText } = getTextForEachPart(text, currentWordIndex);
 
   const handleContainerClick = () => {
+    if (!isTyping) return;
     inputRef.current?.focus();
   };
 
@@ -50,7 +52,6 @@ export const useActions = ({ text }: TActionsProps) => {
   }, [isLimited]);
 
   return {
-    inputRef,
     handleContainerClick,
     completedText,
     currentText,

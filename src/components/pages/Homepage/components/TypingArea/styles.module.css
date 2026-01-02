@@ -1,0 +1,51 @@
+.focusOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+
+  border-radius: var(--radius-4);
+  cursor: pointer;
+  z-index: 10;
+
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 20px,
+    rgba(0, 0, 0, 0.1) 40px,
+    rgba(0, 0, 0, 0.3) 70px,
+    rgba(0, 0, 0, 0.5) 100px,
+    rgba(0, 0, 0, 0.8) 130px,
+    black 180px
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 20px,
+    rgba(0, 0, 0, 0.1) 40px,
+    rgba(0, 0, 0, 0.3) 70px,
+    rgba(0, 0, 0, 0.5) 100px,
+    rgba(0, 0, 0, 0.8) 130px,
+    black 180px
+  );
+}
+
+.radix-themes:where(.dark, [data-appearance='dark']) .focusOverlay {
+  background-color: var(--gray-2);
+}
+
+.focusOverlay span {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--gray-7);
+  transition: color 0.2s ease;
+}
+
+.focusOverlay:hover span {
+  color: var(--green-9);
+}
