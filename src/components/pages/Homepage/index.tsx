@@ -5,8 +5,19 @@ import { useActions } from './useActions';
 import RealtimeResult from './components/RealtimeResult';
 
 export const HomePage = () => {
-  const { text, mode, setMode, setDuration, setTextCategory, setDifficulty, wpm, accuracy, count } =
-    useActions();
+  const {
+    text,
+    mode,
+    setMode,
+    setDuration,
+    setTextCategory,
+    setDifficulty,
+    wpm,
+    accuracy,
+    count,
+    setTypedChars,
+    setIncorrectChars,
+  } = useActions();
 
   return (
     <Section
@@ -33,6 +44,8 @@ export const HomePage = () => {
       <TypingArea
         text={text}
         key={text}
+        setTypedChars={setTypedChars}
+        setIncorrectChars={setIncorrectChars}
       />
     </Section>
   );

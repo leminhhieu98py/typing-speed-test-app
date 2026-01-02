@@ -10,6 +10,8 @@ type TCurrentPartProps = {
   setInputtedText: Dispatch<SetStateAction<string>>;
   originalText: string;
   isLimited: boolean;
+  setTypedChars: Dispatch<SetStateAction<number>>;
+  setIncorrectChars: Dispatch<SetStateAction<number>>;
 };
 
 const CurrentPart = ({
@@ -19,21 +21,27 @@ const CurrentPart = ({
   setInputtedText,
   originalText,
   isLimited,
+  setTypedChars,
+  setIncorrectChars,
 }: TCurrentPartProps) => {
-  const { handleInputKeyUp, inputValue, spanRef } = useActions({
+  const { inputValue, spanRef, handleInputKeyUp, handleBeforeInput, handleInput } = useActions({
     inputRef,
     setCurrentWordIndex,
     setInputtedText,
     originalText,
     isLimited,
     scrollContainerRef,
+    setTypedChars,
+    setIncorrectChars,
   });
 
   return (
     <>
       <input
         ref={inputRef}
+        onBeforeInput={handleBeforeInput}
         onKeyUp={handleInputKeyUp}
+        onInput={handleInput}
         style={{ position: 'absolute', opacity: 0, height: 0, width: 0, cursor: 'none' }}
         maxLength={originalText.length}
         onPaste={(e) => e.preventDefault()}

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, type Dispatch, type SetStateAction } from 'react';
 import CompletedPart from '../CompletedPart';
 import CurrentPart from '../CurrentPart';
 import RemainPart from '../RemainPart';
@@ -7,9 +7,11 @@ import { Card, ScrollArea, Section } from '@radix-ui/themes';
 
 type TTypingAreaProps = {
   text: string;
+  setTypedChars: Dispatch<SetStateAction<number>>;
+  setIncorrectChars: Dispatch<SetStateAction<number>>;
 };
 
-const TypingArea = memo(({ text }: TTypingAreaProps) => {
+const TypingArea = memo(({ text, setTypedChars, setIncorrectChars }: TTypingAreaProps) => {
   const {
     inputRef,
     handleContainerClick,
@@ -46,6 +48,8 @@ const TypingArea = memo(({ text }: TTypingAreaProps) => {
             setInputtedText={setInputtedText}
             originalText={currentText}
             isLimited={isLimited}
+            setTypedChars={setTypedChars}
+            setIncorrectChars={setIncorrectChars}
           />
           <RemainPart text={remainText} />
         </ScrollArea>

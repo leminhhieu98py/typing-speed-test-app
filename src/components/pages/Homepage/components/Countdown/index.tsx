@@ -1,11 +1,12 @@
 import { secondsToMMSS } from '@/utils/commonUtils';
 import { Box, Flex, Strong, Text } from '@radix-ui/themes';
+import { memo } from 'react';
 
 type TCountdownProps = {
   count: number;
 };
 
-const Countdown = ({ count }: TCountdownProps) => {
+const Countdown = memo(({ count }: TCountdownProps) => {
   return (
     <Box>
       <Flex
@@ -28,6 +29,6 @@ const Countdown = ({ count }: TCountdownProps) => {
       </Flex>
     </Box>
   );
-};
+});
 
 export default Countdown;

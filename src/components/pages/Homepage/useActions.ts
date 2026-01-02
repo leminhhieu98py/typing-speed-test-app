@@ -13,14 +13,38 @@ export const useActions = () => {
     countStart: Number(duration),
     intervalMs: 1000,
   });
+  const [typedChars, setTypedChars] = useState(0);
+  const [incorrectChars, setIncorrectChars] = useState(0);
 
   const text = useMemo(() => {
     const texts = COLLECTIONS_MAPPING[textCategory][duration][difficulty];
     return getRandomText(texts);
   }, [duration, textCategory, difficulty]);
 
-  const wpm = useMemo(() => 0, []);
-  const accuracy = useMemo(() => 100, []);
+  const wpm = useMemo(() => {
+    const timeElapsedInSeconds = Number(duration) - count;
+    const timeElapsedInMinutes = timeElapsedInSeconds / 60 || 1;
+    const netWPM = (typedChars / 5 - incorrectChars) / timeElapsedInMinutes;
 
-  return { text, mode, setMode, setDuration, setTextCategory, setDifficulty, wpm, accuracy, count };
+    return Math.max(0, Math.round(netWPM));
+  }, [count, duration, incorrectChars, typedChars]);
+
+  const accuracy = useMemo(
+    () => ((typedChars - incorrectChars) / typedChars) * 100,
+    [typedChars, incorrectChars]
+  );
+
+  return {
+    text,
+    mode,
+    setMode,
+    setDuration,
+    setTextCategory,
+    setDifficulty,
+    wpm,
+    accuracy,
+    count,
+    setTypedChars,
+    setIncorrectChars,
+  };
 };

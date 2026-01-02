@@ -7,7 +7,11 @@ type TActionsProps = {
   setInputtedText: Dispatch<SetStateAction<string>>;
   originalText: string;
   isLimited: boolean;
+  setTypedChars: Dispatch<SetStateAction<number>>;
+  setIncorrectChars: Dispatch<SetStateAction<number>>;
 };
+
+const countRegex = /^[a-zA-Z\s\-,.']+$/;
 
 export const useActions = ({
   inputRef,
@@ -16,9 +20,26 @@ export const useActions = ({
   setInputtedText,
   originalText,
   isLimited,
+  setTypedChars,
+  setIncorrectChars,
 }: TActionsProps) => {
   const [inputValue, setInputValue] = useState('');
   const spanRef = useRef<HTMLSpanElement>(null);
+
+  const handleBeforeInput = (event: React.FormEvent<HTMLInputElement>) => {
+    const inputEvent = event.nativeEvent as InputEvent & { code: string };
+    const character = inputEvent.code === 'Space' ? ' ' : inputEvent.data;
+
+    if (!character?.length) return;
+
+    if (countRegex.test(character)) {
+      setTypedChars((prev) => prev + 1);
+
+      if (character !== originalText[inputValue.length] && character !== ' ') {
+        setIncorrectChars((prev) => prev + 1);
+      }
+    }
+  };
 
   const handleInputKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const character = event.key;
@@ -36,21 +57,11 @@ export const useActions = ({
     }
   };
 
-  useEffect(() => {
+  const handleInput = () => {
     const inputEl = inputRef.current;
     if (!inputEl) return;
-
-    const handleInput = () => {
-      setInputValue(inputEl.value.trim());
-    };
-
-    handleInput();
-    inputEl.addEventListener('input', handleInput);
-
-    return () => {
-      inputEl.removeEventListener('input', handleInput);
-    };
-  }, [inputRef]);
+    setInputValue(inputEl.value.trim());
+  };
 
   useEffect(() => {
     if (spanRef.current && scrollContainerRef.current) {
@@ -64,5 +75,5 @@ export const useActions = ({
     }
   }, [spanRef, scrollContainerRef, originalText]);
 
-  return { inputRef, inputValue, handleInputKeyUp, spanRef };
+  return { inputRef, inputValue, handleInputKeyUp, spanRef, handleBeforeInput, handleInput };
 };
