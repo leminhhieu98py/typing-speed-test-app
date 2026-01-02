@@ -17,9 +17,9 @@ export const HomePage = () => {
     count,
     setTypedChars,
     setIncorrectChars,
-    isTyping,
     startTyping,
     inputRef,
+    isStarted,
   } = useActions();
 
   return (
@@ -37,7 +37,7 @@ export const HomePage = () => {
           setDuration={setDuration}
           setTextCategory={setTextCategory}
           setDifficulty={setDifficulty}
-          isTyping={isTyping}
+          isStarted={isStarted}
         />
         <RealtimeResult
           wpm={wpm}
@@ -52,7 +52,7 @@ export const HomePage = () => {
         setTypedChars={setTypedChars}
         setIncorrectChars={setIncorrectChars}
         startTyping={startTyping}
-        isTyping={isTyping}
+        isStarted={isStarted}
       />
     </Section>
   );

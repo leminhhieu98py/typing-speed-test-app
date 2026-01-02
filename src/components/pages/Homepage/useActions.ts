@@ -1,7 +1,7 @@
 import { COLLECTIONS_MAPPING } from '@/constants';
 import { EDuration, EDifficulty, ETextCategory, Emode } from '@/types/common';
 import { getRandomText } from '@/utils/typingUtils';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useCountdown } from 'usehooks-ts';
 
 export const useActions = () => {
@@ -16,7 +16,7 @@ export const useActions = () => {
   });
   const [typedChars, setTypedChars] = useState(0);
   const [incorrectChars, setIncorrectChars] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
 
   const text = useMemo(() => {
     const texts = COLLECTIONS_MAPPING[textCategory][duration][difficulty];
@@ -36,11 +36,35 @@ export const useActions = () => {
     [typedChars, incorrectChars]
   );
 
+  const isTyping = isStarted && typedChars > 0;
+  const isTimeup = isTyping && count <= 0;
+
   const startTyping = () => {
-    setIsTyping(true);
-    startCountdown();
+    setIsStarted(true);
     inputRef.current?.focus();
   };
+
+  const stopTyping = () => {
+    inputRef.current?.blur();
+
+    // TODO: handle more logic here
+  };
+
+  if (isTimeup) {
+    setIsStarted(false);
+  }
+
+  useEffect(() => {
+    if (mode === Emode.TIME && isTyping && typedChars === 1 && count === Number(duration)) {
+      startCountdown();
+    }
+  }, [mode, isTyping, typedChars, count, duration, startCountdown]);
+
+  useEffect(() => {
+    if (isTimeup) {
+      stopTyping();
+    }
+  }, [isTimeup]);
 
   return {
     text,
@@ -55,7 +79,7 @@ export const useActions = () => {
     setTypedChars,
     setIncorrectChars,
     startTyping,
-    isTyping,
     inputRef,
+    isStarted,
   };
 };

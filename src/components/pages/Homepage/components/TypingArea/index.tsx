@@ -11,7 +11,7 @@ type TTypingAreaProps = {
   setTypedChars: Dispatch<SetStateAction<number>>;
   setIncorrectChars: Dispatch<SetStateAction<number>>;
   startTyping: () => void;
-  isTyping: boolean;
+  isStarted: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
 };
 
@@ -21,7 +21,7 @@ const TypingArea = memo(
     setTypedChars,
     setIncorrectChars,
     startTyping,
-    isTyping,
+    isStarted,
     inputRef,
   }: TTypingAreaProps) => {
     const {
@@ -34,7 +34,7 @@ const TypingArea = memo(
       setInputtedText,
       isLimited,
       scrollContainerRef,
-    } = useActions({ text, inputRef, isTyping });
+    } = useActions({ text, inputRef, isStarted });
 
     return (
       <Section onClick={handleContainerClick}>
@@ -42,7 +42,7 @@ const TypingArea = memo(
           variant='ghost'
           style={{ boxShadow: 'var(--shadow-3)', margin: 0, padding: '1rem', textAlign: 'justify' }}
         >
-          {!isTyping && (
+          {!isStarted && (
             <div
               className={styles.focusOverlay}
               onClick={startTyping}

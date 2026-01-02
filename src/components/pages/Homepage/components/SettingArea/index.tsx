@@ -18,11 +18,18 @@ type TSettingAreaProps = {
   setDuration: Dispatch<SetStateAction<EDuration>>;
   setTextCategory: Dispatch<SetStateAction<ETextCategory>>;
   setDifficulty: Dispatch<SetStateAction<EDifficulty>>;
-  isTyping: boolean;
+  isStarted: boolean;
 };
 
 const SettingArea = memo(
-  ({ mode, setMode, setDuration, setTextCategory, setDifficulty, isTyping }: TSettingAreaProps) => {
+  ({
+    mode,
+    setMode,
+    setDuration,
+    setTextCategory,
+    setDifficulty,
+    isStarted,
+  }: TSettingAreaProps) => {
     return (
       <Section
         py='0'
@@ -79,7 +86,7 @@ const SettingArea = memo(
                   defaultValue={Emode.TIME}
                   onValueChange={(value: Emode) => setMode(value)}
                   radius='large'
-                  disabled={isTyping}
+                  disabled={isStarted}
                 >
                   <SegmentedControl.Item value={Emode.TIME}>
                     <Tooltip content='Type as many words as you can before the timer runs out.'>
@@ -122,7 +129,7 @@ const SettingArea = memo(
                       defaultValue={EDuration['60_SECONDS']}
                       onValueChange={(value: EDuration) => setDuration(value)}
                       radius='large'
-                      disabled={isTyping}
+                      disabled={isStarted}
                     >
                       <SegmentedControl.Item value={EDuration['15_SECONDS']}>
                         15s
@@ -160,7 +167,7 @@ const SettingArea = memo(
                     defaultValue={EDifficulty.MEDIUM}
                     onValueChange={(value: EDifficulty) => setDifficulty(value)}
                     radius='large'
-                    disabled={isTyping}
+                    disabled={isStarted}
                   >
                     <SegmentedControl.Item value={EDifficulty.EASY}>Easy</SegmentedControl.Item>
                     <SegmentedControl.Item value={EDifficulty.MEDIUM}>Medium</SegmentedControl.Item>
@@ -188,7 +195,7 @@ const SettingArea = memo(
                     defaultValue={ETextCategory.CLASSIC}
                     onValueChange={(value: ETextCategory) => setTextCategory(value)}
                     radius='large'
-                    disabled={isTyping}
+                    disabled={isStarted}
                   >
                     <SegmentedControl.Item value={ETextCategory.CLASSIC}>
                       Classic
