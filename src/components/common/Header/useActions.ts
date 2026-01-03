@@ -1,11 +1,19 @@
+import { GENDER_IMAGE_SRC_MAP } from '@/constants';
+import type { TUserInfo } from '@/types/common';
 import type { TRadixTheme } from '@typing/radix';
 import type { Dispatch, SetStateAction } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
 
 type ActionsProps = {
   setTheme: Dispatch<SetStateAction<TRadixTheme>>;
 };
 
 export const useActions = ({ setTheme }: ActionsProps) => {
+  const [value] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
+  const name = value.name;
+  const gender = value.gender || 'other';
+  const imageSrc = GENDER_IMAGE_SRC_MAP[gender];
+
   const handleChangeTheme = () => {
     setTheme((prevTheme) => {
       if (prevTheme === 'dark') return 'light';
@@ -13,5 +21,5 @@ export const useActions = ({ setTheme }: ActionsProps) => {
     });
   };
 
-  return { handleChangeTheme };
+  return { handleChangeTheme, name, imageSrc };
 };

@@ -21,3 +21,12 @@ export enum Emode {
   TIME = 'TIME',
   PASSAGE = 'PASSAGE',
 }
+
+export type TUserInfo = {
+  name?: string;
+  gender?: 'male' | 'female' | 'other';
+  bestWPM?: number | string;
+  accuracy?: number | string;
+  recordedTimestamp?: number;
+  difificulty?: EDifficulty;
+};

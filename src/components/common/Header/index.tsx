@@ -1,7 +1,17 @@
 import type { TRadixTheme } from '@typing/radix';
 import { useActions } from './useActions';
 import type { Dispatch, SetStateAction } from 'react';
-import { Box, Flex, IconButton, Strong, TabNav, Text, Tooltip } from '@radix-ui/themes';
+import {
+  Avatar,
+  Box,
+  Card,
+  Flex,
+  IconButton,
+  Strong,
+  TabNav,
+  Text,
+  Tooltip,
+} from '@radix-ui/themes';
 import { Logo } from '@/assets/images';
 import { Link } from '@tanstack/react-router';
 import styles from './styles.module.css';
@@ -37,7 +47,7 @@ const TabNavLink = () =>
   ));
 
 export const HeaderComponent = ({ theme, setTheme }: THeaderComponentProps) => {
-  const { handleChangeTheme } = useActions({ setTheme });
+  const { handleChangeTheme, name, imageSrc } = useActions({ setTheme });
   const isDark = theme === 'dark';
 
   return (
@@ -60,24 +70,54 @@ export const HeaderComponent = ({ theme, setTheme }: THeaderComponentProps) => {
           <TabNavLink />
         </TabNav.Root>
         <Box>
-          <Tooltip content='Toggle theme'>
-            <IconButton
-              onClick={handleChangeTheme}
-              variant='soft'
-            >
-              {isDark ? (
-                <MoonIcon
-                  width={18}
-                  height={18}
-                />
-              ) : (
-                <SunIcon
-                  width={18}
-                  height={18}
-                />
-              )}
-            </IconButton>
-          </Tooltip>
+          <Flex
+            gap={'3'}
+            align='center'
+          >
+            {name && (
+              <Card variant='ghost'>
+                <Flex
+                  gap='3'
+                  align='center'
+                >
+                  <Avatar
+                    size='1'
+                    {...(imageSrc && { src: imageSrc })}
+                    radius='full'
+                    fallback={'O'}
+                  />
+                  <Box>
+                    <Text
+                      as='div'
+                      size='1'
+                      weight='bold'
+                      color='green'
+                    >
+                      {name}
+                    </Text>
+                  </Box>
+                </Flex>
+              </Card>
+            )}
+            <Tooltip content='Toggle theme'>
+              <IconButton
+                onClick={handleChangeTheme}
+                variant='soft'
+              >
+                {isDark ? (
+                  <MoonIcon
+                    width={18}
+                    height={18}
+                  />
+                ) : (
+                  <SunIcon
+                    width={18}
+                    height={18}
+                  />
+                )}
+              </IconButton>
+            </Tooltip>
+          </Flex>
         </Box>
       </Flex>
     </header>
