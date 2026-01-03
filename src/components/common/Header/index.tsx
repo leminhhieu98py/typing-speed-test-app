@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from '@radix-ui/themes';
 import { Logo } from '@/assets/images';
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import styles from './styles.module.css';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 
@@ -27,24 +27,24 @@ const HOME_ROUTES: Record<'to' | 'label', string>[] = [
   { to: '/result', label: 'Results' },
 ];
 
-const TabNavLink = () =>
-  HOME_ROUTES.map((route) => (
-    <Link
+const TabNavLink = () => {
+  const location = useLocation();
+
+  return HOME_ROUTES.map((route) => (
+    <TabNav.Link
       key={route.to}
-      to={route.to}
+      active={location.pathname === route.to}
+      asChild
     >
-      {({ isActive }) => {
-        return (
-          <TabNav.Link
-            href='#'
-            active={isActive}
-          >
-            {route.label}
-          </TabNav.Link>
-        );
-      }}
-    </Link>
+      <Link
+        key={route.to}
+        to={route.to}
+      >
+        {route.label}
+      </Link>
+    </TabNav.Link>
   ));
+};
 
 export const HeaderComponent = ({ theme, setTheme }: THeaderComponentProps) => {
   const { handleChangeTheme, name, imageSrc } = useActions({ setTheme });
