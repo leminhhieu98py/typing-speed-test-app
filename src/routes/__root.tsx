@@ -14,8 +14,8 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   const [theme, setTheme] = useState<TRadixTheme>('light');
-  const [value] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
-  const isValidLocalStorage = value.name && value.gender;
+  const [userInfo] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
+  const isValidLocalStorage = userInfo.name && userInfo.gender;
 
   return (
     <>
