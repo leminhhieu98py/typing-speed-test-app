@@ -1,7 +1,8 @@
 import { COLLECTIONS_MAPPING } from '@/constants';
 import { EDuration, EDifficulty, ETextCategory, Emode } from '@/types/common';
 import { getRandomText } from '@/utils/typingUtils';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useCountdown } from 'usehooks-ts';
 
 export const useActions = () => {
@@ -17,6 +18,7 @@ export const useActions = () => {
   const [typedChars, setTypedChars] = useState(0);
   const [incorrectChars, setIncorrectChars] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
+  const navigate = useNavigate();
 
   const text = useMemo(() => {
     const texts = COLLECTIONS_MAPPING[textCategory][duration][difficulty];
@@ -44,17 +46,27 @@ export const useActions = () => {
     inputRef.current?.focus();
   };
 
+  const handleEnd = useCallback(() => {
+    inputRef.current?.blur();
+    navigate({
+      to: '/result',
+      search: {
+        from: 'homepage',
+      },
+    });
+  }, [inputRef, navigate]);
+
   useEffect(() => {
-    if (mode === Emode.TIME && isTyping && typedChars === 1 && count === Number(duration)) {
+    if (mode === Emode.TIME && isTyping && typedChars === 1) {
       startCountdown();
     }
   }, [mode, isTyping, typedChars, count, duration, startCountdown]);
 
   useEffect(() => {
     if (isTimeup) {
-      inputRef.current?.blur();
+      handleEnd();
     }
-  }, [isTimeup, inputRef]);
+  }, [isTimeup, handleEnd]);
 
   useEffect(() => {
     resetCountdown();
