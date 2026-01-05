@@ -4,6 +4,14 @@ const randomInRange = (min: number, max: number) => {
   return Math.random() * (max - min) + min;
 };
 
+const fireNormalConfetti = () => {
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 },
+  });
+};
+
 const fireFireworks = () => {
   const duration = 3 * 1000;
   const animationEnd = Date.now() + duration;
@@ -37,4 +45,4 @@ const fireFireworks = () => {
   }, 250);
 };
 
-export { fireFireworks };
+export { fireFireworks, fireNormalConfetti };

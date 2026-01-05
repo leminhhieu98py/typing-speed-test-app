@@ -22,11 +22,22 @@ export enum Emode {
   PASSAGE = 'PASSAGE',
 }
 
+export type TResult = {
+  wpm?: number;
+  accuracy?: number;
+  duration?: EDuration;
+  recordedTimestamp?: number;
+};
+
 export type TUserInfo = {
   name?: string;
   gender?: 'male' | 'female' | 'other';
-  bestWPM?: number | string;
-  accuracy?: number | string;
-  recordedTimestamp?: number;
-  difificulty?: EDifficulty;
-};
+  difficulty?: EDifficulty;
+  bestInfo?: Partial<Record<EDifficulty, TResult>>;
+} & TResult;
+
+export enum ERecoreType {
+  'BASELINE' = 'BASELINE',
+  'BEST' = 'BEST',
+  'NORMAL' = 'NORMAL',
+}

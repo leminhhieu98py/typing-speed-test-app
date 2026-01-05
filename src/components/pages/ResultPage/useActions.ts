@@ -1,21 +1,52 @@
-import { fireFireworks } from '@/utils/confettiUtils';
+import { ERecoreType } from '@/types/common';
+import { fireFireworks, fireNormalConfetti } from '@/utils/confettiUtils';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+const MESSAGE_MAPPING: Record<ERecoreType, Record<'title' | 'description', string>> = {
+  [ERecoreType.BASELINE]: {
+    title: 'Baseline Established 🎉',
+    description: 'You’ve set the bar. Now the real challenge begins — time to beat it.',
+  },
+  [ERecoreType.BEST]: {
+    title: 'High Score Smashed 🎉',
+    description: 'You’re getting faster. That was incredible typing.',
+  },
+  [ERecoreType.NORMAL]: {
+    title: 'Test Complete',
+    description: 'Solid run. Keep pushing to beat your high score.',
+  },
+};
 
 export const useActions = () => {
-  const { from }: { from?: string } = useSearch({ from: '/result' });
+  const { from, recordType: paramRecordType }: { from?: string; recordType?: ERecoreType } =
+    useSearch({
+      from: '/result',
+    });
+  const [recordType] = useState(paramRecordType);
+
   const navigate = useNavigate();
+  const title = recordType
+    ? MESSAGE_MAPPING[recordType].title
+    : MESSAGE_MAPPING[ERecoreType.NORMAL].title;
+  const description = recordType
+    ? MESSAGE_MAPPING[recordType].description
+    : MESSAGE_MAPPING[ERecoreType.NORMAL].description;
 
   useEffect(() => {
     if (from === 'homepage') {
-      fireFireworks();
+      if (paramRecordType === ERecoreType.NORMAL) {
+        fireNormalConfetti();
+      } else {
+        fireFireworks();
+      }
       navigate({
         to: '/result',
         replace: true,
       });
     }
-  }, [from, navigate]);
+  }, [from, paramRecordType, navigate]);
 
-  return {};
+  return { title, description };
 };

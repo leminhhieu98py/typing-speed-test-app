@@ -1,9 +1,17 @@
 import { COLLECTIONS_MAPPING } from '@/constants';
-import { EDuration, EDifficulty, ETextCategory, Emode } from '@/types/common';
+import {
+  EDuration,
+  EDifficulty,
+  ETextCategory,
+  Emode,
+  type TUserInfo,
+  ERecoreType,
+  type TResult,
+} from '@/types/common';
 import { getRandomText } from '@/utils/typingUtils';
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useCountdown } from 'usehooks-ts';
+import { useCountdown, useLocalStorage } from 'usehooks-ts';
 
 export const useActions = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -18,6 +26,7 @@ export const useActions = () => {
   const [typedChars, setTypedChars] = useState(0);
   const [incorrectChars, setIncorrectChars] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
+  const [userInfo, setUserInfo] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
   const navigate = useNavigate();
 
   const text = useMemo(() => {
@@ -47,14 +56,47 @@ export const useActions = () => {
   };
 
   const handleEnd = useCallback(() => {
+    // Prepare record info
+    const isFirstRecord = !userInfo.bestInfo;
+    const isNewBestRecord = !isFirstRecord && (userInfo.bestInfo?.[difficulty]?.wpm || 0) < wpm;
+    const recordType = isFirstRecord
+      ? ERecoreType.BASELINE
+      : isNewBestRecord
+        ? ERecoreType.BEST
+        : ERecoreType.NORMAL;
+
+    const saveNewRecord = () => {
+      const result: TResult = {
+        wpm,
+        accuracy: Math.round(accuracy),
+        duration,
+        recordedTimestamp: Date.now(),
+      };
+
+      const bestRecord = isNewBestRecord ? { [difficulty]: result } : undefined;
+      const bestInfo = isFirstRecord
+        ? { [difficulty]: result }
+        : { ...userInfo.bestInfo, ...bestRecord };
+
+      setUserInfo({
+        ...userInfo,
+        ...result,
+        difficulty,
+        bestInfo,
+      });
+    };
+
+    // Actions
     inputRef.current?.blur();
+    saveNewRecord();
     navigate({
       to: '/result',
       search: {
         from: 'homepage',
+        recordType,
       },
     });
-  }, [inputRef, navigate]);
+  }, [inputRef, navigate, userInfo, setUserInfo, wpm, accuracy, duration, difficulty]);
 
   useEffect(() => {
     if (mode === Emode.TIME && isTyping && typedChars === 1) {
