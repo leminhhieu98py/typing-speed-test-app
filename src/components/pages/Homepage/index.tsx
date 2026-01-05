@@ -20,6 +20,7 @@ export const HomePage = () => {
     startTyping,
     inputRef,
     isStarted,
+    handleEnd,
   } = useActions();
 
   return (
@@ -53,6 +54,7 @@ export const HomePage = () => {
         setIncorrectChars={setIncorrectChars}
         startTyping={startTyping}
         isStarted={isStarted}
+        handleEnd={handleEnd}
       />
     </Section>
   );

@@ -129,5 +129,6 @@ export const useActions = () => {
     startTyping,
     inputRef,
     isStarted,
+    handleEnd,
   };
 };

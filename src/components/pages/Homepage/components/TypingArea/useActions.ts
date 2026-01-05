@@ -4,6 +4,7 @@ type TActionsProps = {
   text: string;
   isStarted: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
+  handleEnd: () => void;
 };
 
 const getTextForEachPart = (
@@ -32,7 +33,7 @@ const getTextForEachPart = (
   };
 };
 
-export const useActions = ({ text, inputRef, isStarted }: TActionsProps) => {
+export const useActions = ({ text, inputRef, isStarted, handleEnd }: TActionsProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [inputtedText, setInputtedText] = useState('');
@@ -47,9 +48,9 @@ export const useActions = ({ text, inputRef, isStarted }: TActionsProps) => {
 
   useEffect(() => {
     if (isLimited) {
-      console.log('go to the result');
+      handleEnd();
     }
-  }, [isLimited]);
+  }, [isLimited, handleEnd]);
 
   return {
     handleContainerClick,
