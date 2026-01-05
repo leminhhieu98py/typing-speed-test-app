@@ -36,7 +36,7 @@ export const useActions = ({
     if (countRegex.test(character)) {
       setTypedChars((prev) => prev + 1);
 
-      if (character !== originalText[inputValue.length] && character !== ' ') {
+      if (character !== originalText[inputValue.length]) {
         setIncorrectChars((prev) => prev + 1);
       }
     }
