@@ -14,7 +14,7 @@ const UserInfoDialog = () => {
           mb='4'
           color='gray'
         >
-          This information will be used to share your typing test results with others.
+          This information will be used to share your typing test result with others.
         </Dialog.Description>
 
         <Flex

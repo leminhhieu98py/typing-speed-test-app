@@ -34,6 +34,17 @@ export const useActions = () => {
     ? MESSAGE_MAPPING[recordType].description
     : MESSAGE_MAPPING[ERecoreType.NORMAL].description;
 
+  const handleStartNewTest = () => {
+    navigate({
+      to: '/',
+    });
+  };
+
+  const handleShareResult = () => {
+    // TODO: implement share result functionality
+    console.log('handleShareResult');
+  };
+
   useEffect(() => {
     if (from === 'homepage') {
       if (paramRecordType === ERecoreType.NORMAL) {
@@ -48,5 +59,5 @@ export const useActions = () => {
     }
   }, [from, paramRecordType, navigate]);
 
-  return { title, description };
+  return { title, description, handleStartNewTest, handleShareResult };
 };

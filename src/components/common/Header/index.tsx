@@ -24,7 +24,7 @@ type THeaderComponentProps = {
 
 const HOME_ROUTES: Record<'to' | 'label', string>[] = [
   { to: '/', label: 'Home' },
-  { to: '/result', label: 'Results' },
+  { to: '/result', label: 'Result' },
 ];
 
 const TabNavLink = () => {

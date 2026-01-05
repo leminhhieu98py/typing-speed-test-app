@@ -1,0 +1,23 @@
+.cardInfoWrapper {
+  width: 16rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-3);
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button.tryAgainButton svg {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button.tryAgainButton:hover svg {
+  transform: rotate(180deg);
+}
