@@ -50,10 +50,10 @@ export const useActions = () => {
   const isTyping = isStarted && typedChars > 0;
   const isTimeup = isTyping && count <= 0;
 
-  const startTyping = () => {
+  const startTyping = useCallback(() => {
     setIsStarted(true);
     inputRef.current?.focus();
-  };
+  }, [inputRef]);
 
   const handleEnd = useCallback(() => {
     // Prepare record info
