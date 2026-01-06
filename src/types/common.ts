@@ -27,6 +27,8 @@ export type TResult = {
   accuracy?: number;
   duration?: EDuration;
   recordedTimestamp?: number;
+  correctChars?: number;
+  incorrectChars?: number;
 };
 
 export type TUserInfo = {
@@ -40,4 +42,5 @@ export enum ERecoreType {
   'BASELINE' = 'BASELINE',
   'BEST' = 'BEST',
   'NORMAL' = 'NORMAL',
+  'LAST_RESULT' = 'LAST_RESULT',
 }

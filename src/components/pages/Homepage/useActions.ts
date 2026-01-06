@@ -57,7 +57,7 @@ export const useActions = () => {
 
   const handleEnd = useCallback(() => {
     // Prepare record info
-    const isFirstRecord = !userInfo.bestInfo;
+    const isFirstRecord = !userInfo.wpm;
     const isNewBestRecord = !isFirstRecord && (userInfo.bestInfo?.[difficulty]?.wpm || 0) < wpm;
     const recordType = isFirstRecord
       ? ERecoreType.BASELINE
@@ -71,6 +71,8 @@ export const useActions = () => {
         accuracy: Math.round(accuracy),
         duration,
         recordedTimestamp: Date.now(),
+        correctChars: typedChars - incorrectChars,
+        incorrectChars,
       };
 
       const bestRecord = isNewBestRecord ? { [difficulty]: result } : undefined;
@@ -96,7 +98,8 @@ export const useActions = () => {
         recordType,
       },
     });
-  }, [inputRef, navigate, userInfo, setUserInfo, wpm, accuracy, duration, difficulty]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputRef, navigate, wpm, accuracy, duration, difficulty]);
 
   useEffect(() => {
     if (mode === Emode.TIME && isTyping && typedChars === 1) {

@@ -1,8 +1,9 @@
-import { ERecoreType } from '@/types/common';
+import { ERecoreType, type TUserInfo } from '@/types/common';
 import { fireFireworks, fireNormalConfetti } from '@/utils/confettiUtils';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 
 import { useEffect, useState } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
 
 const MESSAGE_MAPPING: Record<ERecoreType, Record<'title' | 'description', string>> = {
   [ERecoreType.BASELINE]: {
@@ -17,6 +18,10 @@ const MESSAGE_MAPPING: Record<ERecoreType, Record<'title' | 'description', strin
     title: 'Test Complete',
     description: 'Solid run. Keep pushing to beat your high score.',
   },
+  [ERecoreType.LAST_RESULT]: {
+    title: 'Last Result',
+    description: 'Solid run. Keep pushing to beat your high score.',
+  },
 };
 
 export const useActions = () => {
@@ -25,14 +30,15 @@ export const useActions = () => {
       from: '/result',
     });
   const [recordType] = useState(paramRecordType);
+  const [userInfo] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
 
   const navigate = useNavigate();
   const title = recordType
     ? MESSAGE_MAPPING[recordType].title
-    : MESSAGE_MAPPING[ERecoreType.NORMAL].title;
+    : MESSAGE_MAPPING[ERecoreType.LAST_RESULT].title;
   const description = recordType
     ? MESSAGE_MAPPING[recordType].description
-    : MESSAGE_MAPPING[ERecoreType.NORMAL].description;
+    : MESSAGE_MAPPING[ERecoreType.LAST_RESULT].description;
 
   const handleStartNewTest = () => {
     navigate({
@@ -59,5 +65,5 @@ export const useActions = () => {
     }
   }, [from, paramRecordType, navigate]);
 
-  return { title, description, handleStartNewTest, handleShareResult };
+  return { title, description, handleStartNewTest, handleShareResult, userInfo };
 };

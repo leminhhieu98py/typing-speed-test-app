@@ -3,6 +3,7 @@ import { useActions } from './useActions';
 import { secondsToMMSS } from '@/utils/commonUtils';
 import styles from './styles.module.css';
 import { Share1Icon, UpdateIcon } from '@radix-ui/react-icons';
+import { EDifficulty } from '@/types/common';
 
 type TInfoCardProps = {
   label: string;
@@ -33,8 +34,14 @@ const InfoCard = ({ label, value, valueColor }: TInfoCardProps) => {
   );
 };
 
+const DIFFICULTY_COLOR_MAPPING: Record<EDifficulty, 'green' | 'indigo' | 'ruby'> = {
+  [EDifficulty.EASY]: 'green',
+  [EDifficulty.MEDIUM]: 'indigo',
+  [EDifficulty.HARD]: 'ruby',
+};
+
 export const ResultPage = () => {
-  const { title, description, handleStartNewTest, handleShareResult } = useActions();
+  const { title, description, handleStartNewTest, handleShareResult, userInfo } = useActions();
 
   return (
     <Section p={{ sm: '3rem', md: '6rem', lg: '10rem' }}>
@@ -60,20 +67,50 @@ export const ResultPage = () => {
         </Flex>
         <Flex
           gap={{ sm: '1rem', md: '2rem', lg: '3rem' }}
+          justify='center'
+          align='center'
+        >
+          <Text
+            size='2'
+            color='gray'
+          >
+            {userInfo.recordedTimestamp
+              ? new Date(userInfo.recordedTimestamp)
+                  .toLocaleDateString('vi-VN', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                  })
+                  .replace(/\//g, '-')
+              : '-'}
+          </Text>
+          <Separator
+            orientation='vertical'
+            size='2'
+          />
+          <Text
+            size='2'
+            color={userInfo.difficulty ? DIFFICULTY_COLOR_MAPPING[userInfo.difficulty] : 'gray'}
+          >
+            {userInfo.difficulty}
+          </Text>
+        </Flex>
+        <Flex
+          gap={{ sm: '1rem', md: '2rem', lg: '3rem' }}
           justify='between'
         >
           <InfoCard
             label='ACCURACY'
-            value='91%'
+            value={userInfo.accuracy ? `${userInfo.accuracy}%` : '-'}
           />
           <InfoCard
             label='WORDS PER MIN'
-            value={16}
+            value={userInfo.wpm ?? '-'}
             valueColor='green'
           />
           <InfoCard
             label='TIME'
-            value={secondsToMMSS(60)}
+            value={userInfo.duration ? secondsToMMSS(Number(userInfo.duration)) : '-'}
           />
         </Flex>
         <Flex
@@ -91,7 +128,7 @@ export const ResultPage = () => {
               weight='bold'
               color='green'
             >
-              20
+              {userInfo.correctChars || '-'}
             </Text>
             <Text
               size='1'
@@ -114,7 +151,7 @@ export const ResultPage = () => {
               weight='bold'
               color='ruby'
             >
-              2
+              {userInfo.incorrectChars || '-'}
             </Text>
             <Text
               size='1'
