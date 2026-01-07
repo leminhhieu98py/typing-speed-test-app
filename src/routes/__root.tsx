@@ -7,6 +7,8 @@ import type { TRadixTheme } from '@typing/radix';
 import UserInfoDialog from '@/components/UserInfoDialog';
 import { useLocalStorage } from 'usehooks-ts';
 import type { TUserInfo } from '@/types/common';
+import { TypingContextProvider } from '@/context/TypingContext';
+import ConfirmNavigateDialog from '@/components/ConfirmNavigateDialog';
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -25,12 +27,15 @@ function RootComponent() {
         grayColor='slate'
         radius='large'
       >
-        <HeaderComponent
-          theme={theme}
-          setTheme={setTheme}
-        />
-        {!isValidLocalStorage && <UserInfoDialog />}
-        <Outlet />
+        <TypingContextProvider>
+          <HeaderComponent
+            theme={theme}
+            setTheme={setTheme}
+          />
+          {!isValidLocalStorage && <UserInfoDialog />}
+          <ConfirmNavigateDialog />
+          <Outlet />
+        </TypingContextProvider>
       </Theme>
       <TanStackRouterDevtools position='bottom-right' />
     </>

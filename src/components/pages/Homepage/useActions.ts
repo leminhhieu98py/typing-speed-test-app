@@ -1,4 +1,5 @@
 import { COLLECTIONS_MAPPING } from '@/constants';
+import { TypingDispatchContext } from '@/context/TypingContext';
 import {
   EDuration,
   EDifficulty,
@@ -10,10 +11,11 @@ import {
 } from '@/types/common';
 import { getRandomText } from '@/utils/typingUtils';
 import { useNavigate } from '@tanstack/react-router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useCountdown, useLocalStorage } from 'usehooks-ts';
 
 export const useActions = () => {
+  const dispatch = useContext(TypingDispatchContext);
   const inputRef = useRef<HTMLInputElement>(null);
   const [mode, setMode] = useState(Emode.TIME);
   const [duration, setDuration] = useState(EDuration['60_SECONDS']);
@@ -104,6 +106,7 @@ export const useActions = () => {
   useEffect(() => {
     if (mode === Emode.TIME && isTyping && typedChars === 1) {
       startCountdown();
+      dispatch?.({ type: 'startTyping' });
     }
   }, [mode, isTyping, typedChars, count, duration, startCountdown]);
 

@@ -1,6 +1,6 @@
 import type { TRadixTheme } from '@typing/radix';
 import { useActions } from './useActions';
-import type { Dispatch, SetStateAction } from 'react';
+import { useContext, type Dispatch, type MouseEvent, type SetStateAction } from 'react';
 import {
   Avatar,
   Box,
@@ -16,19 +16,33 @@ import { Logo } from '@/assets/images';
 import { Link, useLocation } from '@tanstack/react-router';
 import styles from './styles.module.css';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
+import { TypingContext, TypingDispatchContext } from '@/context/TypingContext';
 
 type THeaderComponentProps = {
   theme: TRadixTheme;
   setTheme: Dispatch<SetStateAction<TRadixTheme>>;
 };
 
-const HOME_ROUTES: Record<'to' | 'label', string>[] = [
+type TRoute = { to: '/' | '/result'; label: string };
+
+const HOME_ROUTES: TRoute[] = [
   { to: '/', label: 'Home' },
   { to: '/result', label: 'Result' },
 ];
 
 const TabNavLink = () => {
   const location = useLocation();
+  const typingState = useContext(TypingContext);
+  const dispatch = useContext(TypingDispatchContext);
+  const handleClickLink = (
+    e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
+    route: TRoute
+  ) => {
+    if (typingState?.isTyping && route.to !== '/') {
+      e.preventDefault();
+      dispatch?.({ type: 'showConfirmNavigate', to: route.to });
+    }
+  };
 
   return HOME_ROUTES.map((route) => (
     <TabNav.Link
@@ -37,6 +51,7 @@ const TabNavLink = () => {
       asChild
     >
       <Link
+        onClick={(e) => handleClickLink(e, route)}
         key={route.to}
         to={route.to}
       >
