@@ -1,0 +1,30 @@
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-4);
+  --font-weight-medium: 600;
+  box-shadow: var(--shadow-4);
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: var(--color-panel-solid);
+  color: var(--accent-11);
+  border: 1px solid var(--accent-6);
+}
+
+.radix-themes:where(.dark, [data-appearance='dark']) .toast {
+  background-color: var(--gray-2);
+  border-color: var(--gray-5);
+  color: var(--gray-12);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

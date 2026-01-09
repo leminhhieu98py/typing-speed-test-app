@@ -1,3 +1,5 @@
 import { HeaderComponent } from './Header';
+import { Toast } from './Toast';
+import { NotificationDisplay } from './NotificationDisplay';
 
-export { HeaderComponent };
+export { HeaderComponent, Toast, NotificationDisplay };

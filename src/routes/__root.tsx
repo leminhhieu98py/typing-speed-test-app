@@ -1,4 +1,4 @@
-import { Outlet, createRootRoute } from '@tanstack/react-router';
+import { Outlet, createRootRoute, useSearch } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { HeaderComponent } from '@/components/common';
 import { Theme } from '@radix-ui/themes';
@@ -18,6 +18,8 @@ function RootComponent() {
   const [theme, setTheme] = useState<TRadixTheme>('light');
   const [userInfo] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
   const isValidLocalStorage = userInfo.name && userInfo.gender;
+  const { p }: { p?: string } = useSearch({ strict: false });
+  const [sharePayload] = useState(p);
 
   return (
     <>
@@ -32,7 +34,7 @@ function RootComponent() {
             theme={theme}
             setTheme={setTheme}
           />
-          {!isValidLocalStorage && <UserInfoDialog />}
+          {!isValidLocalStorage && !sharePayload && <UserInfoDialog />}
           <ConfirmNavigateDialog />
           <Outlet />
         </TypingContextProvider>

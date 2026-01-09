@@ -1,9 +1,10 @@
-import { Button, Card, Flex, Section, Separator, Strong, Text } from '@radix-ui/themes';
+import { Badge, Button, Card, Flex, Section, Separator, Strong, Text } from '@radix-ui/themes';
 import { useActions } from './useActions';
 import { secondsToMMSS } from '@/utils/commonUtils';
 import styles from './styles.module.css';
 import { Share1Icon, UpdateIcon } from '@radix-ui/react-icons';
 import { EDifficulty } from '@/types/common';
+import { NotificationDisplay } from '@/components/common';
 
 type TInfoCardProps = {
   label: string;
@@ -41,7 +42,16 @@ const DIFFICULTY_COLOR_MAPPING: Record<EDifficulty, 'green' | 'indigo' | 'ruby'>
 };
 
 export const ResultPage = () => {
-  const { title, description, handleStartNewTest, handleShareResult, userInfo } = useActions();
+  const {
+    title,
+    description,
+    handleStartNewTest,
+    handleShareResult,
+    userInfo,
+    notis,
+    removeNoti,
+    isValidShareData,
+  } = useActions();
 
   return (
     <Section p={{ sm: '3rem', md: '6rem', lg: '10rem' }}>
@@ -88,12 +98,12 @@ export const ResultPage = () => {
             orientation='vertical'
             size='2'
           />
-          <Text
+          <Badge
             size='2'
             color={userInfo.difficulty ? DIFFICULTY_COLOR_MAPPING[userInfo.difficulty] : 'gray'}
           >
             {userInfo.difficulty}
-          </Text>
+          </Badge>
         </Flex>
         <Flex
           gap={{ sm: '1rem', md: '2rem', lg: '3rem' }}
@@ -161,31 +171,39 @@ export const ResultPage = () => {
             </Text>
           </Flex>
         </Flex>
-        <Flex
-          gap='1.5rem'
-          justify='between'
-        >
-          <Button
-            size='4'
-            variant='outline'
-            radius='full'
-            className={styles.button}
-            onClick={handleShareResult}
+        {!isValidShareData && (
+          <Flex
+            gap='1.5rem'
+            justify='between'
           >
-            <Share1Icon />
-            Share result
-          </Button>
-          <Button
-            size='4'
-            radius='full'
-            className={`${styles.button} ${styles.tryAgainButton}`}
-            onClick={handleStartNewTest}
-          >
-            <UpdateIcon />
-            Start new test
-          </Button>
-        </Flex>
+            <Button
+              size='4'
+              variant='outline'
+              radius='full'
+              className={styles.button}
+              onClick={handleShareResult}
+            >
+              <Share1Icon />
+              Share result
+            </Button>
+            <Button
+              size='4'
+              radius='full'
+              className={`${styles.button} ${styles.tryAgainButton}`}
+              onClick={handleStartNewTest}
+            >
+              <UpdateIcon />
+              Start new test
+            </Button>
+          </Flex>
+        )}
       </Flex>
+      {!isValidShareData && (
+        <NotificationDisplay
+          notis={notis}
+          onRemove={removeNoti}
+        />
+      )}
     </Section>
   );
 };
