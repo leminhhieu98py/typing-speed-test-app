@@ -1,7 +1,8 @@
 import { EDifficulty, EDuration, Emode, ETextCategory } from '@/types/common';
-import { ClockIcon, MixerHorizontalIcon } from '@radix-ui/react-icons';
+import { ClockIcon, MixerHorizontalIcon, ReloadIcon } from '@radix-ui/react-icons';
 import {
   Box,
+  Button,
   Card,
   Flex,
   Heading,
@@ -19,6 +20,7 @@ type TSettingAreaProps = {
   setTextCategory: Dispatch<SetStateAction<ETextCategory>>;
   setDifficulty: Dispatch<SetStateAction<EDifficulty>>;
   isStarted: boolean;
+  handleRestart: () => void;
 };
 
 const SettingArea = memo(
@@ -29,6 +31,7 @@ const SettingArea = memo(
     setTextCategory,
     setDifficulty,
     isStarted,
+    handleRestart,
   }: TSettingAreaProps) => {
     return (
       <Section
@@ -62,8 +65,7 @@ const SettingArea = memo(
           <Box mb={{ sm: '2', md: '3', lg: '4' }}>
             <Flex
               gap={{ sm: '3', md: '6', lg: '10' }}
-              justify='between'
-              align='center'
+              align='end'
             >
               <Flex
                 direction='column'
@@ -100,6 +102,13 @@ const SettingArea = memo(
                   </SegmentedControl.Item>
                 </SegmentedControl.Root>
               </Flex>
+              <Button
+                variant='outline'
+                disabled={!isStarted}
+                onClick={handleRestart}
+              >
+                <ReloadIcon /> Restart
+              </Button>
             </Flex>
           </Box>
           <Box>

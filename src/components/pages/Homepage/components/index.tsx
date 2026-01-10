@@ -1,5 +1,3 @@
-import RealtimeResult from './RealtimeResult';
-import SettingArea from './SettingArea';
-import TypingArea from './TypingArea';
+import HomeContent from './HomeContent';
 
-export default { TypingArea, SettingArea, RealtimeResult };
+export { HomeContent };
