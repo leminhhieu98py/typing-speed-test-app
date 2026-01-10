@@ -2,7 +2,7 @@ import { EDuration, EDifficulty, ETextCategory } from '@/types/common';
 import { CLASSIC_COLLECTION, RHETORIC_COLLECTION, SCIENCE_COLLECTION } from '@/assets/collections';
 import { AvatarMale, AvatarFemale } from '@/assets/images';
 
-export const COLLECTIONS_MAPPING: Record<
+const COLLECTIONS_MAPPING: Record<
   ETextCategory,
   Record<EDuration, Record<EDifficulty, string[]>>
 > = {
@@ -11,7 +11,11 @@ export const COLLECTIONS_MAPPING: Record<
   [ETextCategory.SCIENCE]: SCIENCE_COLLECTION,
 };
 
-export const GENDER_IMAGE_SRC_MAP: Record<string, string> = {
+const GENDER_IMAGE_SRC_MAP: Record<string, string> = {
   male: AvatarMale,
   female: AvatarFemale,
 };
+
+const RESULT_PAGE_KEY = import.meta.env.RESULT_PAGE_KEY;
+
+export { COLLECTIONS_MAPPING, GENDER_IMAGE_SRC_MAP, RESULT_PAGE_KEY };

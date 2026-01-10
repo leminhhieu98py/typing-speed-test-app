@@ -29,6 +29,7 @@ export type TResult = {
   recordedTimestamp?: number;
   correctChars?: number;
   incorrectChars?: number;
+  signature?: string;
 };
 
 export type TUserInfo = {

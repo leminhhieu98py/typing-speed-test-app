@@ -6,10 +6,7 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { useCopyToClipboard, useDebounceCallback, useLocalStorage } from 'usehooks-ts';
 import CryptoJS from 'crypto-js';
-
-type TPayloadWithSig = TUserInfo & { sig: string };
-
-const secret = import.meta.env.RESULT_PAGE_KEY;
+import { RESULT_PAGE_KEY } from '@/constants';
 
 const MESSAGE_MAPPING: Record<ERecoreType, Record<'title' | 'description', string>> = {
   [ERecoreType.BASELINE]: {
@@ -32,14 +29,18 @@ const MESSAGE_MAPPING: Record<ERecoreType, Record<'title' | 'description', strin
 
 const verifyPayload = (
   payload?: string
-): { isValid: false; data: undefined } | { isValid: true; data: TPayloadWithSig } => {
+): { isValid: false; data: undefined } | { isValid: true; data: TUserInfo } => {
   if (!payload) return { isValid: false, data: undefined };
 
-  const payloadObj: TPayloadWithSig = JSON.parse(atob(payload));
+  const payloadObj: TUserInfo = JSON.parse(atob(payload));
+  const { wpm, accuracy, duration, recordedTimestamp } = payloadObj;
 
-  const expectedSignature = CryptoJS.HmacSHA256(`${payloadObj.wpm}`, secret).toString();
+  const expectedSignature = CryptoJS.HmacSHA256(
+    `${wpm}_${accuracy}_${duration}_${recordedTimestamp}`,
+    RESULT_PAGE_KEY
+  ).toString();
 
-  if (payloadObj.sig === expectedSignature) {
+  if (payloadObj.signature === expectedSignature) {
     return { isValid: true, data: payloadObj };
   }
 
@@ -53,16 +54,11 @@ const getShareURL = ({
   userInfo: TUserInfo;
   recordType?: ERecoreType;
 }): string => {
-  const signature = userInfo.wpm
-    ? CryptoJS.HmacSHA256(userInfo.wpm.toString(), secret).toString()
-    : undefined;
+  if (!userInfo.signature) return '';
 
-  if (!signature) return '';
-
-  const transferData: TPayloadWithSig = {
+  const transferData: TUserInfo = {
     ...userInfo,
     bestInfo: undefined,
-    sig: signature,
   };
   const dataString = JSON.stringify(transferData);
 

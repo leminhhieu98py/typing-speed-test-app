@@ -1,4 +1,4 @@
-import { COLLECTIONS_MAPPING } from '@/constants';
+import { COLLECTIONS_MAPPING, RESULT_PAGE_KEY } from '@/constants';
 import { TypingDispatchContext } from '@/context/TypingContext';
 import {
   EDuration,
@@ -13,6 +13,7 @@ import { getRandomText } from '@/utils/typingUtils';
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useCountdown, useLocalStorage } from 'usehooks-ts';
+import CryptoJS from 'crypto-js';
 
 export const useActions = () => {
   const dispatch = useContext(TypingDispatchContext);
@@ -66,15 +67,21 @@ export const useActions = () => {
       : isNewBestRecord
         ? ERecoreType.BEST
         : ERecoreType.NORMAL;
+    const recordedTimestamp = Date.now();
+    const signature = CryptoJS.HmacSHA256(
+      `${wpm}_${Math.round(accuracy)}_${duration}_${recordedTimestamp}`,
+      RESULT_PAGE_KEY
+    ).toString();
 
     const saveNewRecord = () => {
       const result: TResult = {
         wpm,
         accuracy: Math.round(accuracy),
         duration,
-        recordedTimestamp: Date.now(),
+        recordedTimestamp,
         correctChars: typedChars - incorrectChars,
         incorrectChars,
+        signature,
       };
 
       const bestRecord = isNewBestRecord ? { [difficulty]: result } : undefined;
@@ -108,7 +115,7 @@ export const useActions = () => {
       startCountdown();
       dispatch?.({ type: 'startTyping' });
     }
-  }, [mode, isTyping, typedChars, count, duration, startCountdown]);
+  }, [mode, isTyping, typedChars, count, duration, startCountdown, dispatch]);
 
   useEffect(() => {
     if (isTimeup) {
