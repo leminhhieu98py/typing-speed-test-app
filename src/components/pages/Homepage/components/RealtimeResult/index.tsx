@@ -6,9 +6,10 @@ type TRealtimeResultProps = {
   wpm: number;
   accuracy: number;
   count: number;
+  isTimeMode: boolean;
 };
 
-const RealtimeResult = ({ wpm, accuracy, count }: TRealtimeResultProps) => {
+const RealtimeResult = ({ wpm, accuracy, count, isTimeMode }: TRealtimeResultProps) => {
   return (
     <Section py='0'>
       <Card
@@ -24,7 +25,10 @@ const RealtimeResult = ({ wpm, accuracy, count }: TRealtimeResultProps) => {
             wpm={wpm}
             accuracy={accuracy}
           />
-          <Countdown count={count} />
+          <Countdown
+            count={count}
+            isTimeMode={isTimeMode}
+          />
         </Flex>
       </Card>
     </Section>

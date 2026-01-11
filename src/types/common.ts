@@ -25,7 +25,7 @@ export enum Emode {
 export type TResult = {
   wpm?: number;
   accuracy?: number;
-  duration?: EDuration;
+  duration?: string;
   recordedTimestamp?: number;
   correctChars?: number;
   incorrectChars?: number;

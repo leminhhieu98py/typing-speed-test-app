@@ -13,7 +13,7 @@ type TTypingAreaProps = {
   startTyping: () => void;
   isStarted: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
-  handleEnd: () => void;
+  setIsEndOfParagraph: Dispatch<SetStateAction<boolean>>;
 };
 
 const TypingArea = memo(
@@ -24,7 +24,7 @@ const TypingArea = memo(
     startTyping,
     isStarted,
     inputRef,
-    handleEnd,
+    setIsEndOfParagraph,
   }: TTypingAreaProps) => {
     const {
       handleContainerClick,
@@ -36,7 +36,7 @@ const TypingArea = memo(
       setInputtedText,
       isLimited,
       scrollContainerRef,
-    } = useActions({ text, inputRef, isStarted, handleEnd });
+    } = useActions({ text, inputRef, isStarted, setIsEndOfParagraph });
 
     return (
       <Section onClick={handleContainerClick}>

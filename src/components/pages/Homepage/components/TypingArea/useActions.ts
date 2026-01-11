@@ -1,10 +1,17 @@
-import { useEffect, useRef, useState, type RefObject } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type RefObject,
+  type SetStateAction,
+} from 'react';
 
 type TActionsProps = {
   text: string;
   isStarted: boolean;
   inputRef: RefObject<HTMLInputElement | null>;
-  handleEnd: () => void;
+  setIsEndOfParagraph: Dispatch<SetStateAction<boolean>>;
 };
 
 const getTextForEachPart = (
@@ -33,7 +40,7 @@ const getTextForEachPart = (
   };
 };
 
-export const useActions = ({ text, inputRef, isStarted, handleEnd }: TActionsProps) => {
+export const useActions = ({ text, inputRef, isStarted, setIsEndOfParagraph }: TActionsProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [inputtedText, setInputtedText] = useState('');
@@ -48,9 +55,9 @@ export const useActions = ({ text, inputRef, isStarted, handleEnd }: TActionsPro
 
   useEffect(() => {
     if (isLimited) {
-      handleEnd();
+      setIsEndOfParagraph(true);
     }
-  }, [isLimited, handleEnd]);
+  }, [isLimited, setIsEndOfParagraph]);
 
   return {
     handleContainerClick,

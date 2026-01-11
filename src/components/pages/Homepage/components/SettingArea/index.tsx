@@ -14,7 +14,7 @@ import {
 import { memo, type Dispatch, type SetStateAction } from 'react';
 
 type TSettingAreaProps = {
-  mode: Emode;
+  isTimeMode: boolean;
   setMode: Dispatch<SetStateAction<Emode>>;
   setDuration: Dispatch<SetStateAction<EDuration>>;
   setTextCategory: Dispatch<SetStateAction<ETextCategory>>;
@@ -25,7 +25,7 @@ type TSettingAreaProps = {
 
 const SettingArea = memo(
   ({
-    mode,
+    isTimeMode,
     setMode,
     setDuration,
     setTextCategory,
@@ -117,7 +117,7 @@ const SettingArea = memo(
               gapY='1rem'
               wrap='wrap'
             >
-              {mode === Emode.TIME && (
+              {isTimeMode && (
                 <Flex
                   gap={{ sm: '3', md: '6', lg: '10' }}
                   justify='between'

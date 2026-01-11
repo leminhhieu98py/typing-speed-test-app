@@ -4,9 +4,10 @@ import { memo } from 'react';
 
 type TCountdownProps = {
   count: number;
+  isTimeMode: boolean;
 };
 
-const Countdown = memo(({ count }: TCountdownProps) => {
+const Countdown = memo(({ count, isTimeMode }: TCountdownProps) => {
   const isWarning = count <= 10;
 
   return (
@@ -22,9 +23,9 @@ const Countdown = memo(({ count }: TCountdownProps) => {
           Time Remaining
         </Text>
         <Text
-          color={isWarning ? 'red' : 'gray'}
+          color={isWarning && isTimeMode ? 'red' : 'gray'}
           size='6'
-          highContrast={!isWarning}
+          highContrast={!isWarning || !isTimeMode}
         >
           <Strong>{secondsToMMSS(count)}</Strong>
         </Text>

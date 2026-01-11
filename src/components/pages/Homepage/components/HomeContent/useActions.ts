@@ -15,17 +15,27 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'r
 import { useCountdown, useLocalStorage } from 'usehooks-ts';
 import CryptoJS from 'crypto-js';
 
+const DEFAULT_SETTING = {
+  duration: EDuration['30_SECONDS'],
+  textCategory: ETextCategory.CLASSIC,
+  difficulty: EDifficulty.MEDIUM,
+};
+
 export const useActions = () => {
   const dispatch = useContext(TypingDispatchContext);
   const inputRef = useRef<HTMLInputElement>(null);
   const [mode, setMode] = useState(Emode.TIME);
-  const [duration, setDuration] = useState(EDuration['60_SECONDS']);
-  const [textCategory, setTextCategory] = useState(ETextCategory.CLASSIC);
-  const [difficulty, setDifficulty] = useState(EDifficulty.MEDIUM);
+  const [duration, setDuration] = useState(DEFAULT_SETTING.duration);
+  const [textCategory, setTextCategory] = useState(DEFAULT_SETTING.textCategory);
+  const [difficulty, setDifficulty] = useState(DEFAULT_SETTING.difficulty);
+  const [isEndOfParagraph, setIsEndOfParagraph] = useState(false);
+  const isTimeMode = mode === Emode.TIME;
   const [count, { startCountdown, resetCountdown }] = useCountdown({
-    countStart: Number(duration),
-    intervalMs: 1000,
+    countStart: isTimeMode ? Number(duration) : 0,
+    isIncrement: !isTimeMode,
+    countStop: isTimeMode ? 0 : Infinity,
   });
+
   const [typedChars, setTypedChars] = useState(0);
   const [incorrectChars, setIncorrectChars] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
@@ -33,17 +43,20 @@ export const useActions = () => {
   const navigate = useNavigate();
 
   const text = useMemo(() => {
-    const texts = COLLECTIONS_MAPPING[textCategory][duration][difficulty];
+    const texts =
+      COLLECTIONS_MAPPING[textCategory][isTimeMode ? duration : DEFAULT_SETTING.duration][
+        difficulty
+      ];
     return getRandomText(texts);
-  }, [duration, textCategory, difficulty]);
+  }, [duration, textCategory, difficulty, isTimeMode]);
 
   const wpm = useMemo(() => {
-    const timeElapsedInSeconds = Number(duration) - count;
+    const timeElapsedInSeconds = isTimeMode ? Number(duration) - count : count;
     const timeElapsedInMinutes = timeElapsedInSeconds / 60 || 1;
     const netWPM = (typedChars - incorrectChars) / (5 * timeElapsedInMinutes);
 
     return Math.max(0, Math.round(netWPM));
-  }, [count, duration, incorrectChars, typedChars]);
+  }, [count, duration, incorrectChars, typedChars, isTimeMode]);
 
   const accuracy = useMemo(
     () => ((typedChars - incorrectChars) / (typedChars || 1)) * 100,
@@ -51,7 +64,7 @@ export const useActions = () => {
   );
 
   const isTyping = isStarted && typedChars > 0;
-  const isTimeup = isTyping && count <= 0;
+  const isTimeup = isTimeMode ? isTyping && count <= 0 : isEndOfParagraph;
 
   const startTyping = useCallback(() => {
     setIsStarted(true);
@@ -69,7 +82,7 @@ export const useActions = () => {
         : ERecoreType.NORMAL;
     const recordedTimestamp = Date.now();
     const signature = CryptoJS.HmacSHA256(
-      `${wpm}_${Math.round(accuracy)}_${duration}_${recordedTimestamp}`,
+      `${wpm}_${Math.round(accuracy)}_${isTimeMode ? duration : count}_${recordedTimestamp}`,
       RESULT_PAGE_KEY
     ).toString();
 
@@ -77,7 +90,7 @@ export const useActions = () => {
       const result: TResult = {
         wpm,
         accuracy: Math.round(accuracy),
-        duration,
+        duration: isTimeMode ? duration : count.toString(),
         recordedTimestamp,
         correctChars: typedChars - incorrectChars,
         incorrectChars,
@@ -108,28 +121,28 @@ export const useActions = () => {
       },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputRef, navigate, wpm, accuracy, duration, difficulty]);
+  }, [inputRef, navigate, wpm, accuracy, duration, difficulty, isTimeMode, count]);
 
   useEffect(() => {
-    if (mode === Emode.TIME && isTyping && typedChars === 1) {
+    if (isTyping && typedChars === 1) {
       startCountdown();
       dispatch?.({ type: 'startTyping' });
     }
-  }, [mode, isTyping, typedChars, count, duration, startCountdown, dispatch]);
+  }, [isTyping, typedChars, startCountdown, dispatch]);
 
   useEffect(() => {
-    if (isTimeup) {
+    if (isTimeup || isEndOfParagraph) {
       handleEnd();
     }
-  }, [isTimeup, handleEnd]);
+  }, [isTimeup, isEndOfParagraph, handleEnd]);
 
   useEffect(() => {
     resetCountdown();
-  }, [duration, resetCountdown]);
+  }, [duration, resetCountdown, isTimeMode]);
 
   return {
     text,
-    mode,
+    isTimeMode,
     setMode,
     setDuration,
     setTextCategory,
@@ -142,6 +155,6 @@ export const useActions = () => {
     startTyping,
     inputRef,
     isStarted,
-    handleEnd,
+    setIsEndOfParagraph,
   };
 };

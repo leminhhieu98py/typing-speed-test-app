@@ -9,7 +9,7 @@ type THomeContentProps = { handleRestart: () => void };
 const HomeContent = ({ handleRestart }: THomeContentProps) => {
   const {
     text,
-    mode,
+    isTimeMode,
     setMode,
     setDuration,
     setTextCategory,
@@ -22,7 +22,7 @@ const HomeContent = ({ handleRestart }: THomeContentProps) => {
     startTyping,
     inputRef,
     isStarted,
-    handleEnd,
+    setIsEndOfParagraph,
   } = useActions();
 
   return (
@@ -32,7 +32,7 @@ const HomeContent = ({ handleRestart }: THomeContentProps) => {
         justify='between'
       >
         <SettingArea
-          mode={mode}
+          isTimeMode={isTimeMode}
           setMode={setMode}
           setDuration={setDuration}
           setTextCategory={setTextCategory}
@@ -41,6 +41,7 @@ const HomeContent = ({ handleRestart }: THomeContentProps) => {
           handleRestart={handleRestart}
         />
         <RealtimeResult
+          isTimeMode={isTimeMode}
           wpm={wpm}
           accuracy={accuracy}
           count={count}
@@ -54,7 +55,7 @@ const HomeContent = ({ handleRestart }: THomeContentProps) => {
         setIncorrectChars={setIncorrectChars}
         startTyping={startTyping}
         isStarted={isStarted}
-        handleEnd={handleEnd}
+        setIsEndOfParagraph={setIsEndOfParagraph}
       />
     </>
   );
