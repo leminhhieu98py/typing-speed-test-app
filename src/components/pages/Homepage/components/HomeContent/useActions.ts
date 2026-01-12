@@ -14,6 +14,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useCountdown, useLocalStorage } from 'usehooks-ts';
 import CryptoJS from 'crypto-js';
+import dayjs from 'dayjs';
 
 const DEFAULT_SETTING = {
   duration: EDuration['30_SECONDS'],
@@ -80,7 +81,7 @@ export const useActions = () => {
       : isNewBestRecord
         ? ERecoreType.BEST
         : ERecoreType.NORMAL;
-    const recordedTimestamp = Date.now();
+    const recordedTimestamp = dayjs().valueOf();
     const signature = CryptoJS.HmacSHA256(
       `${wpm}_${Math.round(accuracy)}_${isTimeMode ? duration : count}_${recordedTimestamp}`,
       RESULT_PAGE_KEY

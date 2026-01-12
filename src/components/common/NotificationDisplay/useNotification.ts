@@ -1,10 +1,12 @@
+import dayjs from 'dayjs';
 import { useCallback, useState } from 'react';
 
 export const useNotification = () => {
   const [notis, setNotis] = useState<{ id: number; msg: string }[]>([]);
 
   const showNoti = useCallback((msg: string) => {
-    const id = Date.now();
+    const id = dayjs().valueOf();
+
     setNotis((prev) => [...prev, { id, msg }]);
   }, []);
 

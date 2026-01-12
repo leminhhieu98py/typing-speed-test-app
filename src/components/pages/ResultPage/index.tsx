@@ -5,6 +5,7 @@ import styles from './styles.module.css';
 import { Share1Icon, UpdateIcon } from '@radix-ui/react-icons';
 import { EDifficulty } from '@/types/common';
 import { NotificationDisplay } from '@/components/common';
+import dayjs from 'dayjs';
 
 type TInfoCardProps = {
   label: string;
@@ -85,13 +86,7 @@ export const ResultPage = () => {
             color='gray'
           >
             {userInfo.recordedTimestamp
-              ? new Date(userInfo.recordedTimestamp)
-                  .toLocaleDateString('vi-VN', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                  })
-                  .replace(/\//g, '-')
+              ? dayjs(userInfo.recordedTimestamp).format('DD-MM-YYYY')
               : '-'}
           </Text>
           <Separator

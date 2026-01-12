@@ -1,4 +1,5 @@
 import confetti from 'canvas-confetti';
+import dayjs from 'dayjs';
 
 const randomInRange = (min: number, max: number) => {
   return Math.random() * (max - min) + min;
@@ -14,7 +15,7 @@ const fireNormalConfetti = () => {
 
 const fireFireworks = () => {
   const duration = 3 * 1000;
-  const animationEnd = Date.now() + duration;
+  const animationEnd = dayjs().valueOf() + duration;
   const defaults = {
     startVelocity: 30,
     spread: 360,
@@ -24,7 +25,7 @@ const fireFireworks = () => {
   };
 
   const interval = setInterval(function () {
-    const timeLeft = animationEnd - Date.now();
+    const timeLeft = animationEnd - dayjs().valueOf();
 
     if (timeLeft <= 0) {
       return clearInterval(interval);

@@ -20,6 +20,7 @@
     "@tanstack/react-router": "^1.143.6",
     "canvas-confetti": "^1.9.4",
     "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.19",
     "diff": "^8.0.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
