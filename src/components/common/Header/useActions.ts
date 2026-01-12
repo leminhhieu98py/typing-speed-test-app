@@ -9,7 +9,7 @@ type ActionsProps = {
 };
 
 export const useActions = ({ setTheme }: ActionsProps) => {
-  const [userInfo] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
+  const [userInfo] = useLocalStorage<TUserInfo>('user-info', {});
   const name = userInfo.name;
   const gender = userInfo.gender || 'other';
   const imageSrc = GENDER_IMAGE_SRC_MAP[gender];

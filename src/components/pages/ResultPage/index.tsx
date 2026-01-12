@@ -6,6 +6,7 @@ import { Share1Icon, UpdateIcon } from '@radix-ui/react-icons';
 import { EDifficulty } from '@/types/common';
 import { NotificationDisplay } from '@/components/common';
 import dayjs from 'dayjs';
+import { COMMON_DATE_FORMAT } from '@/constants';
 
 type TInfoCardProps = {
   label: string;
@@ -86,7 +87,7 @@ export const ResultPage = () => {
             color='gray'
           >
             {userInfo.recordedTimestamp
-              ? dayjs(userInfo.recordedTimestamp).format('DD-MM-YYYY')
+              ? dayjs(userInfo.recordedTimestamp).format(COMMON_DATE_FORMAT)
               : '-'}
           </Text>
           <Separator

@@ -1,4 +1,4 @@
-import { COLLECTIONS_MAPPING, RESULT_PAGE_KEY } from '@/constants';
+import { COLLECTIONS_MAPPING, COMMON_DATE_FORMAT, RESULT_PAGE_KEY } from '@/constants';
 import { TypingDispatchContext } from '@/context/TypingContext';
 import {
   EDuration,
@@ -40,7 +40,10 @@ export const useActions = () => {
   const [typedChars, setTypedChars] = useState(0);
   const [incorrectChars, setIncorrectChars] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
-  const [userInfo, setUserInfo] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
+  const [userInfo, setUserInfo] = useLocalStorage<TUserInfo>('user-info', {});
+  const [userHistory, setUserHistory] = useLocalStorage<
+    Record<string, Partial<Record<EDifficulty, TResult[]>>>
+  >('user-history', {});
   const navigate = useNavigate();
 
   const text = useMemo(() => {
@@ -72,22 +75,14 @@ export const useActions = () => {
     inputRef.current?.focus();
   }, [inputRef]);
 
-  const handleEnd = useCallback(() => {
-    // Prepare record info
-    const isFirstRecord = !userInfo.wpm;
-    const isNewBestRecord = !isFirstRecord && (userInfo.bestInfo?.[difficulty]?.wpm || 0) < wpm;
-    const recordType = isFirstRecord
-      ? ERecoreType.BASELINE
-      : isNewBestRecord
-        ? ERecoreType.BEST
-        : ERecoreType.NORMAL;
-    const recordedTimestamp = dayjs().valueOf();
-    const signature = CryptoJS.HmacSHA256(
-      `${wpm}_${Math.round(accuracy)}_${isTimeMode ? duration : count}_${recordedTimestamp}`,
-      RESULT_PAGE_KEY
-    ).toString();
+  const saveNewRecord = useCallback(
+    ({ isFirstRecord, isNewBestRecord }: { isNewBestRecord: boolean; isFirstRecord: boolean }) => {
+      const recordedTimestamp = dayjs().valueOf();
+      const signature = CryptoJS.HmacSHA256(
+        `${wpm}_${Math.round(accuracy)}_${isTimeMode ? duration : count}_${recordedTimestamp}`,
+        RESULT_PAGE_KEY
+      ).toString();
 
-    const saveNewRecord = () => {
       const result: TResult = {
         wpm,
         accuracy: Math.round(accuracy),
@@ -109,11 +104,48 @@ export const useActions = () => {
         difficulty,
         bestInfo,
       });
-    };
+
+      // Set result to the history
+      const today = dayjs().format(COMMON_DATE_FORMAT);
+
+      const todayData = userHistory[today] ? userHistory[today] : {};
+
+      if (!todayData[difficulty]) {
+        todayData[difficulty] = [];
+      }
+
+      todayData[difficulty].push(result);
+      setUserHistory((prev) => ({ ...prev, [today]: todayData }));
+    },
+    [
+      wpm,
+      accuracy,
+      isTimeMode,
+      duration,
+      count,
+      typedChars,
+      incorrectChars,
+      difficulty,
+      setUserHistory,
+      setUserInfo,
+      userInfo,
+      userHistory,
+    ]
+  );
+
+  const handleEnd = useCallback(() => {
+    // Prepare record info
+    const isFirstRecord = !userInfo.wpm;
+    const isNewBestRecord = !isFirstRecord && (userInfo.bestInfo?.[difficulty]?.wpm || 0) < wpm;
+    const recordType = isFirstRecord
+      ? ERecoreType.BASELINE
+      : isNewBestRecord
+        ? ERecoreType.BEST
+        : ERecoreType.NORMAL;
 
     // Actions
     inputRef.current?.blur();
-    saveNewRecord();
+    saveNewRecord({ isFirstRecord, isNewBestRecord });
     navigate({
       to: '/result',
       search: {
@@ -122,7 +154,7 @@ export const useActions = () => {
       },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputRef, navigate, wpm, accuracy, duration, difficulty, isTimeMode, count]);
+  }, [inputRef, navigate, wpm, difficulty]);
 
   useEffect(() => {
     if (isTyping && typedChars === 1) {

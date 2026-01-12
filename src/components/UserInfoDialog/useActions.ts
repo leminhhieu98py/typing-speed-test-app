@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
 export const useActions = () => {
-  const [, setUserInfo] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
+  const [, setUserInfo] = useLocalStorage<TUserInfo>('user-info', {});
   const [newUserInfo, setNewUserInfo] = useState<Pick<TUserInfo, 'name' | 'gender'>>({});
   const [isOpen, setIsOpen] = useState(true);
 

@@ -78,7 +78,7 @@ export const useActions = () => {
     from: '/result',
   });
   const [recordType] = useState(paramRecordType);
-  const [userInfo] = useLocalStorage<TUserInfo>('typing-speed-test-user-info', {});
+  const [userInfo] = useLocalStorage<TUserInfo>('user-info', {});
   const [userInfoFromShareResult] = useState(verifyPayload(sharePayload));
   const [, copy] = useCopyToClipboard();
   const { notis, showNoti, removeNoti } = useNotification();
@@ -103,6 +103,9 @@ export const useActions = () => {
     if (isValidShareData) return;
 
     const shareUrl = getShareURL({ userInfo, recordType });
+
+    if (!shareUrl) return;
+
     copy(shareUrl).then(() => {
       showNoti('Shared link is copied, share with your friends now.');
     });

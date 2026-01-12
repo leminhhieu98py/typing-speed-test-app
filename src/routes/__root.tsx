@@ -18,10 +18,7 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   const [theme, setTheme] = useState<TRadixTheme>('light');
-  const [userInfo, , removeUserInfo] = useLocalStorage<TUserInfo>(
-    'typing-speed-test-user-info',
-    {}
-  );
+  const [userInfo, , removeUserInfo] = useLocalStorage<TUserInfo>('user-info', {});
   const isValidLocalStorage = userInfo.name && userInfo.gender;
   const { p }: { p?: string } = useSearch({ strict: false });
   const [sharePayload] = useState(p);
