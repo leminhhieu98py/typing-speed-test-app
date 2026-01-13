@@ -16,6 +16,7 @@ export const useActions = () => {
       navigate({ to: typingState.to });
     }
     dispatch?.({ type: 'hideConfirmNavigate' });
+    dispatch?.({ type: 'stopTyping' });
   };
 
   return { typingState, handleCancel, handleConfirm };
