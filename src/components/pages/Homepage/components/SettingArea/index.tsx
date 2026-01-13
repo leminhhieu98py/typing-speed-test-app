@@ -68,47 +68,52 @@ const SettingArea = memo(
               align='end'
             >
               <Flex
-                direction='column'
-                gap={{ sm: '2', md: '3' }}
+                gap='2'
+                align='end'
               >
-                <Text
-                  as='label'
-                  size={{ sm: '1', md: '2', lg: '3' }}
-                  color='gray'
+                <Flex
+                  direction='column'
+                  gap={{ sm: '2', md: '3' }}
                 >
-                  <Flex
-                    gap='1'
-                    align='center'
+                  <Text
+                    as='label'
+                    size={{ sm: '1', md: '2', lg: '3' }}
+                    color='gray'
                   >
-                    <ClockIcon />
-                    <Text>Mode</Text>
-                  </Flex>
-                </Text>
-                <SegmentedControl.Root
-                  defaultValue={Emode.TIME}
-                  onValueChange={(value: Emode) => setMode(value)}
-                  radius='large'
-                  disabled={isStarted}
+                    <Flex
+                      gap='1'
+                      align='center'
+                    >
+                      <ClockIcon />
+                      <Text>Mode</Text>
+                    </Flex>
+                  </Text>
+                  <SegmentedControl.Root
+                    defaultValue={Emode.TIME}
+                    onValueChange={(value: Emode) => setMode(value)}
+                    radius='large'
+                    disabled={isStarted}
+                  >
+                    <SegmentedControl.Item value={Emode.TIME}>
+                      <Tooltip content='Type as many words as you can before the timer runs out.'>
+                        <Text>Timed</Text>
+                      </Tooltip>
+                    </SegmentedControl.Item>
+                    <SegmentedControl.Item value={Emode.PASSAGE}>
+                      <Tooltip content='Type the entire passage as accurately and quickly as possible.'>
+                        <Text>Passage</Text>
+                      </Tooltip>
+                    </SegmentedControl.Item>
+                  </SegmentedControl.Root>
+                </Flex>
+                <Button
+                  variant='outline'
+                  disabled={!isStarted}
+                  onClick={handleRestart}
                 >
-                  <SegmentedControl.Item value={Emode.TIME}>
-                    <Tooltip content='Type as many words as you can before the timer runs out.'>
-                      <Text>Timed</Text>
-                    </Tooltip>
-                  </SegmentedControl.Item>
-                  <SegmentedControl.Item value={Emode.PASSAGE}>
-                    <Tooltip content='Type the entire passage as accurately and quickly as possible.'>
-                      <Text>Passage</Text>
-                    </Tooltip>
-                  </SegmentedControl.Item>
-                </SegmentedControl.Root>
+                  <ReloadIcon /> Restart
+                </Button>
               </Flex>
-              <Button
-                variant='outline'
-                disabled={!isStarted}
-                onClick={handleRestart}
-              >
-                <ReloadIcon /> Restart
-              </Button>
             </Flex>
           </Box>
           <Box>
