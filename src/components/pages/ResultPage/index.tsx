@@ -115,7 +115,7 @@ export const ResultPage = () => {
             valueColor='green'
           />
           <InfoCard
-            label='TIME'
+            label='DURATION'
             value={userInfo.duration ? secondsToMMSS(Number(userInfo.duration)) : '-'}
           />
         </Flex>
