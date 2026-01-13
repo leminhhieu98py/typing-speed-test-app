@@ -153,6 +153,7 @@ export const useActions = () => {
         recordType,
       },
     });
+    dispatch?.({ type: 'stopTyping' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputRef, navigate, wpm, difficulty]);
 
