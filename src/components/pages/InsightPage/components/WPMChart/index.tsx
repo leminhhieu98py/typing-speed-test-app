@@ -1,5 +1,6 @@
 import { COMMON_DATE_FORMAT } from '@/constants';
 import type { TResult } from '@/types/common';
+import { Text } from '@radix-ui/themes';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import {
@@ -62,14 +63,14 @@ const WPMChart = ({ data }: TWPMChartProps) => {
               const timestamp = payload?.[0]?.payload.recordedTimestamp;
               const time = timestamp ? dayjs(timestamp).format(COMMON_DATE_FORMAT) : '-';
 
-              return <>{time}</>;
+              return <Text color='green'>{time}</Text>;
             }}
           />
         }
       />
       <Legend />
       <Line
-        type='monotone'
+        type='natural'
         dataKey='wpm'
         stroke='#00824d'
       />

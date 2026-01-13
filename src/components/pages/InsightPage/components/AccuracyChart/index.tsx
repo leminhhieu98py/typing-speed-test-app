@@ -1,5 +1,6 @@
 import { COMMON_DATE_FORMAT } from '@/constants';
 import type { TResult } from '@/types/common';
+import { Text } from '@radix-ui/themes';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import {
@@ -67,16 +68,16 @@ const AccuracyChart = ({ data }: TAccuracyChartProps) => {
               const timestamp = payload?.[0]?.payload.recordedTimestamp;
               const time = timestamp ? dayjs(timestamp).format(COMMON_DATE_FORMAT) : '-';
 
-              return <>{time}</>;
+              return <Text color='indigo'>{time}</Text>;
             }}
           />
         }
       />
       <Legend />
       <Line
-        type='monotone'
+        type='natural'
         dataKey='accuracy'
-        stroke='#00824d'
+        stroke='#002bb7c5'
       />
     </LineChart>
   );
