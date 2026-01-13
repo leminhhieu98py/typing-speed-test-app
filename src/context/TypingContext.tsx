@@ -3,7 +3,7 @@ import { createContext, type Dispatch, useReducer, type PropsWithChildren } from
 type TTypingState = {
   isTyping: boolean;
   showConfirmNavigate: boolean;
-  to?: '/result';
+  to?: '/result' | '/insight';
 };
 
 const initialTypingState: TTypingState = {

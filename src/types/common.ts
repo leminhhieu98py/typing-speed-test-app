@@ -26,7 +26,7 @@ export type TResult = {
   wpm?: number;
   accuracy?: number;
   duration?: string;
-  recordedTimestamp?: number;
+  recordedTimestamp?: string | number;
   correctChars?: number;
   incorrectChars?: number;
   signature?: string;
@@ -45,3 +45,5 @@ export enum ERecoreType {
   'NORMAL' = 'NORMAL',
   'LAST_RESULT' = 'LAST_RESULT',
 }
+
+export type TuserHistory = Record<string, Partial<Record<EDifficulty, TResult[]>>>;

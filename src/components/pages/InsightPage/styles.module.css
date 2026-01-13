@@ -1,0 +1,9 @@
+.chartWrapper {
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .chartWrapper {
+    flex-wrap: nowrap;
+  }
+}

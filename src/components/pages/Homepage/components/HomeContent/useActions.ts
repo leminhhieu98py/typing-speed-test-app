@@ -8,6 +8,7 @@ import {
   type TUserInfo,
   ERecoreType,
   type TResult,
+  type TuserHistory,
 } from '@/types/common';
 import { getRandomText } from '@/utils/typingUtils';
 import { useNavigate } from '@tanstack/react-router';
@@ -41,9 +42,7 @@ export const useActions = () => {
   const [incorrectChars, setIncorrectChars] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
   const [userInfo, setUserInfo] = useLocalStorage<TUserInfo>('user-info', {});
-  const [userHistory, setUserHistory] = useLocalStorage<
-    Record<string, Partial<Record<EDifficulty, TResult[]>>>
-  >('user-history', {});
+  const [userHistory, setUserHistory] = useLocalStorage<TuserHistory>('user-history', {});
   const navigate = useNavigate();
 
   const text = useMemo(() => {

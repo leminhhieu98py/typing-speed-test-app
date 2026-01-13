@@ -23,11 +23,12 @@ type THeaderComponentProps = {
   setTheme: Dispatch<SetStateAction<TRadixTheme>>;
 };
 
-type TRoute = { to: '/' | '/result'; label: string };
+type TRoute = { to: '/' | '/result' | '/insight'; label: string };
 
 const HOME_ROUTES: TRoute[] = [
   { to: '/', label: 'Home' },
   { to: '/result', label: 'Result' },
+  { to: '/insight', label: 'Insight' },
 ];
 
 const TabNavLink = () => {
