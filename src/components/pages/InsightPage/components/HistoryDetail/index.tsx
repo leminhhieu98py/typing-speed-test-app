@@ -23,20 +23,31 @@ const HistoryDetail = ({ data }: THistoryDetailProps) => {
       </Table.Header>
 
       <Table.Body>
-        {reverseData.map((item) => (
+        {reverseData.length > 0 ? (
+          reverseData.map((item) => (
+            <Table.Row>
+              <Table.Cell align='center'>{item.wpm || '-'}</Table.Cell>
+              <Table.Cell align='center'>{item.accuracy || '-'}%</Table.Cell>
+              <Table.Cell align='center'>{item.duration || '-'}</Table.Cell>
+              <Table.Cell align='center'>{item.correctChars || '-'}</Table.Cell>
+              <Table.Cell align='center'>{item.incorrectChars || '-'}</Table.Cell>
+              <Table.Cell align='center'>
+                {item.recordedTimestamp
+                  ? dayjs(item.recordedTimestamp).format('HH:mm DD-MM-YYYY')
+                  : '-'}
+              </Table.Cell>
+            </Table.Row>
+          ))
+        ) : (
           <Table.Row>
-            <Table.Cell align='center'>{item.wpm || '-'}</Table.Cell>
-            <Table.Cell align='center'>{item.accuracy || '-'}%</Table.Cell>
-            <Table.Cell align='center'>{item.duration || '-'}</Table.Cell>
-            <Table.Cell align='center'>{item.correctChars || '-'}</Table.Cell>
-            <Table.Cell align='center'>{item.incorrectChars || '-'}</Table.Cell>
-            <Table.Cell align='center'>
-              {item.recordedTimestamp
-                ? dayjs(item.recordedTimestamp).format('HH:mm DD-MM-YYYY')
-                : '-'}
+            <Table.Cell
+              align='center'
+              colSpan={6}
+            >
+              No history record to display
             </Table.Cell>
           </Table.Row>
-        ))}
+        )}
       </Table.Body>
     </Table.Root>
   );
