@@ -2,6 +2,8 @@ import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { tanstackRouter } from '@tanstack/router-plugin/rspack';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({
   server: {
@@ -45,13 +47,24 @@ export default defineConfig({
       // TODO: change image and link later
       'og:image': {
         property: 'og:image',
-        content:
-          'https://images.unsplash.com/photo-1552053831-71594a27632d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9nc3xlbnwwfHwwfHx8MA%3D%3D',
+        content: 'https://just-type-vn.netlify.app/logo.png',
       },
       'og:url': {
         property: 'og:url',
-        content: 'http://localhost:7979/',
+        content: 'https://just-type-vn.netlify.app',
       },
     },
+  },
+  performance: {
+    chunkSplit: {
+      strategy: 'split-by-size',
+      maxSize: 30000,
+    },
+  },
+  resolve: {
+    dedupe: ['immer'],
+  },
+  output: {
+    assetPrefix: isProd ? 'https://just-type-vn.netlify.app' : '/',
   },
 });
