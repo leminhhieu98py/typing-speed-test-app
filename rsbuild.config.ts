@@ -37,14 +37,13 @@ export default defineConfig({
       },
       'og:title': {
         property: 'og:title',
-        content: 'Typing speed test app',
+        content: 'Just type',
       },
       'og:description': {
         property: 'og:description',
         content:
           "I've just broken my personal record on Just Type! Click the link to take the challenge, beat my WPM score",
       },
-      // TODO: change image and link later
       'og:image': {
         property: 'og:image',
         content: 'https://just-type-vn.netlify.app/logo.png',
