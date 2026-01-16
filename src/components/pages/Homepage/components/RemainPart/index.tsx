@@ -10,7 +10,7 @@ const RemainPart = ({ text }: TRemainPartProps) => {
 
   return (
     <Text
-      size='8'
+      size={{ initial: '5', sm: '6', md: '7', lg: '8' }}
       style={{ color: 'var(--gray-6)' }}
     >
       {text}

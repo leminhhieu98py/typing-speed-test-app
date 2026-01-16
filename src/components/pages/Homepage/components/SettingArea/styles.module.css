@@ -1,0 +1,21 @@
+.iconWrapper svg {
+  width: var(--space-3);
+  height: var(--space-3);
+}
+
+.settingArea {
+  flex-wrap: wrap;
+  max-width: min-content;
+}
+
+@media (min-width: 1024px) {
+  .iconWrapper svg {
+    width: var(--space-5);
+    height: var(--space-5);
+  }
+
+  .settingArea {
+    flex-wrap: nowrap;
+    max-width: max-content;
+  }
+}

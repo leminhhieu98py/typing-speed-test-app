@@ -42,21 +42,26 @@ const TypingArea = memo(
       <Section onClick={handleContainerClick}>
         <Card
           variant='ghost'
-          style={{ boxShadow: 'var(--shadow-3)', margin: 0, padding: '1rem', textAlign: 'justify' }}
+          className={styles.card}
         >
           {!isStarted && (
             <div
               className={styles.focusOverlay}
               onClick={startTyping}
             >
-              <Text color='gray'>Click to focus and start typing</Text>
+              <Text
+                size={{ initial: '2', sm: '4' }}
+                color='gray'
+              >
+                Click to focus and start typing
+              </Text>
             </div>
           )}
           <ScrollArea
             ref={scrollContainerRef}
             type='always'
             scrollbars='vertical'
-            style={{ height: '26rem', padding: '1rem' }}
+            className={styles.scrollArea}
           >
             <CompletedPart
               originalText={completedText}

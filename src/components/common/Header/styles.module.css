@@ -6,7 +6,15 @@
 .headerLogo {
   width: 100%;
   height: 100%;
-  border-radius: var(--radius-2);
-  max-width: var(--space-6);
-  max-height: var(--space-6);
+  border-radius: var(--radius-1);
+  max-width: var(--space-4);
+  max-height: var(--space-4);
+}
+
+@media (min-width: 1024px) {
+  .headerLogo {
+    border-radius: var(--radius-2);
+    max-width: var(--space-6);
+    max-height: var(--space-6);
+  }
 }

@@ -47,8 +47,7 @@ const CurrentPart = ({
         onPaste={(e) => e.preventDefault()}
       />
       <Text
-        size='8'
-        color='ruby'
+        size={{ initial: '5', sm: '6', md: '7', lg: '8' }}
         ref={spanRef}
         className={styles.currentWord}
       >
