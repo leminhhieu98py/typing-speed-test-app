@@ -19,7 +19,7 @@ const RealtimeResult = ({ wpm, accuracy, count, isTimeMode }: TRealtimeResultPro
         <Flex
           direction='column'
           align='start'
-          gapY='1rem'
+          gapY={{ initial: '1', xs: '2', sm: '3', md: '4' }}
         >
           <RealtimeStats
             wpm={wpm}

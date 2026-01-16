@@ -1,17 +1,7 @@
 import type { TRadixTheme } from '@typing/radix';
 import { useActions } from './useActions';
 import { useContext, type Dispatch, type MouseEvent, type SetStateAction } from 'react';
-import {
-  Avatar,
-  Box,
-  Card,
-  Flex,
-  IconButton,
-  Strong,
-  TabNav,
-  Text,
-  Tooltip,
-} from '@radix-ui/themes';
+import { Avatar, Card, Flex, IconButton, Strong, TabNav, Text, Tooltip } from '@radix-ui/themes';
 import { Logo } from '@/assets/images';
 import { Link, useLocation } from '@tanstack/react-router';
 import styles from './styles.module.css';
@@ -70,7 +60,7 @@ export const HeaderComponent = ({ theme, setTheme }: THeaderComponentProps) => {
     <header className={styles.header}>
       <Flex justify='between'>
         <Flex
-          gap='2'
+          gap={{ initial: '1', md: '2' }}
           align='center'
         >
           <img
@@ -78,63 +68,61 @@ export const HeaderComponent = ({ theme, setTheme }: THeaderComponentProps) => {
             alt='A logo with "T" text and green background color'
             className={styles.headerLogo}
           />
-          <Text size='5'>
+          <Text size={{ initial: '1', md: '5' }}>
             <Strong>Just type</Strong>
           </Text>
         </Flex>
-        <TabNav.Root>
+        <TabNav.Root size={{ initial: '1', md: '2' }}>
           <TabNavLink />
         </TabNav.Root>
-        <Box>
-          <Flex
-            gap={'3'}
-            align='center'
-          >
-            {name && (
-              <Card variant='ghost'>
-                <Flex
-                  gap='3'
-                  align='center'
-                >
-                  <Avatar
-                    size='1'
-                    {...(imageSrc && { src: imageSrc })}
-                    radius='full'
-                    fallback={'O'}
-                  />
-                  <Box>
-                    <Text
-                      as='div'
-                      size='1'
-                      weight='bold'
-                      color='green'
-                    >
-                      {name}
-                    </Text>
-                  </Box>
-                </Flex>
-              </Card>
-            )}
-            <Tooltip content='Toggle theme'>
-              <IconButton
-                onClick={handleChangeTheme}
-                variant='soft'
+        <Flex
+          gap={{ initial: '1', md: '3' }}
+          align='center'
+          justify='center'
+        >
+          {name && (
+            <Card variant='ghost'>
+              <Flex
+                gap={{ initial: '1', md: '3' }}
+                align='center'
               >
-                {isDark ? (
-                  <MoonIcon
-                    width={18}
-                    height={18}
-                  />
-                ) : (
-                  <SunIcon
-                    width={18}
-                    height={18}
-                  />
-                )}
-              </IconButton>
-            </Tooltip>
-          </Flex>
-        </Box>
+                <Avatar
+                  size='1'
+                  {...(imageSrc && { src: imageSrc })}
+                  radius='full'
+                  fallback={'O'}
+                />
+                <Text
+                  as='div'
+                  size={{ initial: '1', md: '2' }}
+                  weight='bold'
+                  color='green'
+                >
+                  {name}
+                </Text>
+              </Flex>
+            </Card>
+          )}
+          <Tooltip content='Toggle theme'>
+            <IconButton
+              onClick={handleChangeTheme}
+              variant='soft'
+              size={{ initial: '1', md: '2' }}
+            >
+              {isDark ? (
+                <MoonIcon
+                  width={18}
+                  height={18}
+                />
+              ) : (
+                <SunIcon
+                  width={18}
+                  height={18}
+                />
+              )}
+            </IconButton>
+          </Tooltip>
+        </Flex>
       </Flex>
     </header>
   );

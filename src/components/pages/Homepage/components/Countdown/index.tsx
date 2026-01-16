@@ -1,5 +1,5 @@
 import { secondsToMMSS } from '@/utils/commonUtils';
-import { Box, Flex, Strong, Text } from '@radix-ui/themes';
+import { Flex, Strong, Text } from '@radix-ui/themes';
 import { memo } from 'react';
 
 type TCountdownProps = {
@@ -11,26 +11,24 @@ const Countdown = memo(({ count, isTimeMode }: TCountdownProps) => {
   const isWarning = count <= 10;
 
   return (
-    <Box>
-      <Flex
-        direction='column'
-        gap='1'
+    <Flex
+      direction='column'
+      gap='1'
+    >
+      <Text
+        color='gray'
+        size={{ initial: '1', xs: '2', md: '3', lg: '4' }}
       >
-        <Text
-          color='gray'
-          size={{ sm: '1', md: '2', lg: '3' }}
-        >
-          Time Remaining
-        </Text>
-        <Text
-          color={isWarning && isTimeMode ? 'red' : 'gray'}
-          size='6'
-          highContrast={!isWarning || !isTimeMode}
-        >
-          <Strong>{secondsToMMSS(count)}</Strong>
-        </Text>
-      </Flex>
-    </Box>
+        Time Remaining
+      </Text>
+      <Text
+        color={isWarning && isTimeMode ? 'red' : 'gray'}
+        size={{ initial: '2', xs: '3', md: '5', lg: '7' }}
+        highContrast={!isWarning || !isTimeMode}
+      >
+        <Strong>{secondsToMMSS(count)}</Strong>
+      </Text>
+    </Flex>
   );
 });
 

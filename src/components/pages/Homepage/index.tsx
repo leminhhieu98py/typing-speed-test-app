@@ -7,8 +7,8 @@ export const HomePage = () => {
 
   return (
     <Section
-      px={{ sm: '3rem', md: '6rem', lg: '10rem' }}
-      py={{ sm: '1rem', md: '1rem', lg: '2rem' }}
+      px={{ initial: '2', sm: '4', md: '6', lg: '9' }}
+      py={{ initial: '2', sm: '4', md: '6' }}
     >
       <HomeContent
         key={key}

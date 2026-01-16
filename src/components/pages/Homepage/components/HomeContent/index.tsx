@@ -28,7 +28,7 @@ const HomeContent = ({ handleRestart }: THomeContentProps) => {
   return (
     <>
       <Flex
-        gap={{ sm: '1rem', md: '2rem', lg: '3rem' }}
+        gap={{ initial: '2', sm: '4', lg: '5' }}
         justify='between'
       >
         <SettingArea
