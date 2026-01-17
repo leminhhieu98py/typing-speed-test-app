@@ -8,16 +8,16 @@ export const InsightPage = () => {
 
   return (
     <Section
-      px={{ sm: '3rem', md: '6rem', lg: '10rem' }}
-      py={{ sm: '1rem', md: '1rem', lg: '2rem' }}
+      px={{ initial: '2', sm: '4', md: '6', lg: '9' }}
+      py={{ initial: '2', sm: '4', md: '6' }}
     >
       <Flex
         direction='column'
-        gap='9'
+        gap={{ initial: '4', sm: '9' }}
       >
         <InsightSetting setDifficulty={setDifficulty} />
         <Flex
-          gap='9'
+          gap={{ initial: '4', md: '9' }}
           className={styles.chartWrapper}
         >
           <WPMChart data={data} />

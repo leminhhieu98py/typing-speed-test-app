@@ -10,7 +10,11 @@ type THistoryDetailProps = {
 const HistoryDetail = ({ data }: THistoryDetailProps) => {
   const reverseData = useMemo(() => [...data].reverse(), [data]);
   return (
-    <Table.Root variant='surface'>
+    <Table.Root
+      variant='surface'
+      size={{ initial: '1', sm: '2', md: '3' }}
+      layout='auto'
+    >
       <Table.Header>
         <Table.Row>
           <Table.ColumnHeaderCell align='center'>WPM</Table.ColumnHeaderCell>
