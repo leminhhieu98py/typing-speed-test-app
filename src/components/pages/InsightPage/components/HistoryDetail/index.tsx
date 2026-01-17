@@ -26,11 +26,11 @@ const HistoryDetail = ({ data }: THistoryDetailProps) => {
         {reverseData.length > 0 ? (
           reverseData.map((item) => (
             <Table.Row>
-              <Table.Cell align='center'>{item.wpm || '-'}</Table.Cell>
-              <Table.Cell align='center'>{item.accuracy || '-'}%</Table.Cell>
+              <Table.Cell align='center'>{item.wpm ?? '-'}</Table.Cell>
+              <Table.Cell align='center'>{item.accuracy ?? '-'}%</Table.Cell>
               <Table.Cell align='center'>{item.duration || '-'}</Table.Cell>
-              <Table.Cell align='center'>{item.correctChars || '-'}</Table.Cell>
-              <Table.Cell align='center'>{item.incorrectChars || '-'}</Table.Cell>
+              <Table.Cell align='center'>{item.correctChars ?? '-'}</Table.Cell>
+              <Table.Cell align='center'>{item.incorrectChars ?? '-'}</Table.Cell>
               <Table.Cell align='center'>
                 {item.recordedTimestamp
                   ? dayjs(item.recordedTimestamp).format('HH:mm DD-MM-YYYY')
