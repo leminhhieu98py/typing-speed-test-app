@@ -21,14 +21,14 @@ const InfoCard = ({ label, value, valueColor }: TInfoCardProps) => {
       variant='ghost'
     >
       <Text
-        size='8'
+        size={{ initial: '3', xs: '4', sm: '5', md: '7', lg: '8' }}
         weight='bold'
         color={valueColor}
       >
         {value}
       </Text>
       <Text
-        size='1'
+        size='2'
         color='gray'
       >
         {label}
@@ -56,9 +56,13 @@ export const ResultPage = () => {
   } = useActions();
 
   return (
-    <Section p={{ sm: '3rem', md: '6rem', lg: '10rem' }}>
+    <Section
+      px={{ initial: '2', sm: '3rem', md: '6rem', lg: '10rem' }}
+      py='10rem'
+    >
       <Flex
-        gap={{ sm: '1rem', md: '2rem', lg: '3rem' }}
+        gapX={{ sm: '1rem', md: '2rem', lg: '3rem' }}
+        gapY={{ initial: '4', md: '6', lg: '8' }}
         direction='column'
         align='center'
       >
@@ -67,18 +71,19 @@ export const ResultPage = () => {
           align='center'
           gap='1rem'
         >
-          <Text size='8'>
+          <Text size={{ initial: '6', md: '7', lg: '8' }}>
             <Strong>{title}</Strong>
           </Text>
           <Text
             size='2'
             color='gray'
+            align='center'
           >
             {description}
           </Text>
         </Flex>
         <Flex
-          gap={{ sm: '1rem', md: '2rem', lg: '3rem' }}
+          gap={{ initial: '1rem', md: '2rem', lg: '3rem' }}
           justify='center'
           align='center'
         >
@@ -102,15 +107,16 @@ export const ResultPage = () => {
           </Badge>
         </Flex>
         <Flex
-          gap={{ sm: '1rem', md: '2rem', lg: '3rem' }}
+          gap={{ initial: '1', xs: '2', sm: '4', md: '6', lg: '8' }}
           justify='between'
+          className={styles.infoCardWrapper}
         >
           <InfoCard
             label='ACCURACY'
             value={userInfo.accuracy ? `${userInfo.accuracy}%` : '-'}
           />
           <InfoCard
-            label='WORDS PER MIN'
+            label='WPM'
             value={userInfo.wpm ?? '-'}
             valueColor='green'
           />
@@ -120,7 +126,7 @@ export const ResultPage = () => {
           />
         </Flex>
         <Flex
-          gap={{ sm: '1rem', md: '2rem', lg: '3rem' }}
+          gap={{ initial: '1rem', md: '2rem', lg: '3rem' }}
           justify='center'
           align='center'
         >
@@ -134,7 +140,7 @@ export const ResultPage = () => {
               weight='bold'
               color='green'
             >
-              {userInfo.correctChars || '-'}
+              {userInfo.correctChars ?? '-'}
             </Text>
             <Text
               size='1'
@@ -157,7 +163,7 @@ export const ResultPage = () => {
               weight='bold'
               color='ruby'
             >
-              {userInfo.incorrectChars || '-'}
+              {userInfo.incorrectChars ?? '-'}
             </Text>
             <Text
               size='1'
@@ -173,7 +179,7 @@ export const ResultPage = () => {
             justify='between'
           >
             <Button
-              size='4'
+              size={{ initial: '2', xs: '3', sm: '4' }}
               variant='outline'
               radius='full'
               className={styles.button}
@@ -183,7 +189,7 @@ export const ResultPage = () => {
               Share result
             </Button>
             <Button
-              size='4'
+              size={{ initial: '2', xs: '3', sm: '4' }}
               radius='full'
               className={`${styles.button} ${styles.tryAgainButton}`}
               onClick={handleStartNewTest}
