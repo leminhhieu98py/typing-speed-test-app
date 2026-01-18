@@ -46,7 +46,7 @@ export default defineConfig({
       },
       'og:image': {
         property: 'og:image',
-        content: 'https://just-type-vn.netlify.app/logo.png',
+        content: 'https://just-type-vn.netlify.app/preview.png',
       },
       'og:url': {
         property: 'og:url',
