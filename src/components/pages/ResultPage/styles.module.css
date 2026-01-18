@@ -1,12 +1,18 @@
 .cardInfoWrapper {
-  width: 16rem;
-  height: 10rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-3);
+  width: 7rem;
+  height: 5rem;
+  gap: 0.25rem;
+}
+
+.infoCardWrapper {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0 1rem;
 }
 
 .button:hover {
@@ -20,4 +26,32 @@
 
 .button.tryAgainButton:hover svg {
   transform: rotate(180deg);
+}
+
+@media (min-width: 520px) {
+  .cardInfoWrapper {
+    width: 10rem;
+    height: 6rem;
+    gap: 0.3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .cardInfoWrapper {
+    width: 14rem;
+    height: 8rem;
+    gap: 0.4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cardInfoWrapper {
+    width: 16rem;
+    height: 10rem;
+    gap: 0.5rem;
+  }
+
+  .infoCardWrapper {
+    width: unset;
+  }
 }

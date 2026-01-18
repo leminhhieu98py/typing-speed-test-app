@@ -10,7 +10,11 @@ type THistoryDetailProps = {
 const HistoryDetail = ({ data }: THistoryDetailProps) => {
   const reverseData = useMemo(() => [...data].reverse(), [data]);
   return (
-    <Table.Root variant='surface'>
+    <Table.Root
+      variant='surface'
+      size={{ initial: '1', sm: '2', md: '3' }}
+      layout='auto'
+    >
       <Table.Header>
         <Table.Row>
           <Table.ColumnHeaderCell align='center'>WPM</Table.ColumnHeaderCell>
@@ -26,11 +30,11 @@ const HistoryDetail = ({ data }: THistoryDetailProps) => {
         {reverseData.length > 0 ? (
           reverseData.map((item) => (
             <Table.Row>
-              <Table.Cell align='center'>{item.wpm || '-'}</Table.Cell>
-              <Table.Cell align='center'>{item.accuracy || '-'}%</Table.Cell>
+              <Table.Cell align='center'>{item.wpm ?? '-'}</Table.Cell>
+              <Table.Cell align='center'>{item.accuracy ?? '-'}%</Table.Cell>
               <Table.Cell align='center'>{item.duration || '-'}</Table.Cell>
-              <Table.Cell align='center'>{item.correctChars || '-'}</Table.Cell>
-              <Table.Cell align='center'>{item.incorrectChars || '-'}</Table.Cell>
+              <Table.Cell align='center'>{item.correctChars ?? '-'}</Table.Cell>
+              <Table.Cell align='center'>{item.incorrectChars ?? '-'}</Table.Cell>
               <Table.Cell align='center'>
                 {item.recordedTimestamp
                   ? dayjs(item.recordedTimestamp).format('HH:mm DD-MM-YYYY')

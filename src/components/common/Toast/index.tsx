@@ -23,7 +23,7 @@ export const Toast = ({ message, id, onRemove }: TToastProps) => {
       >
         <path d='M20 6L9 17l-5-5' />
       </svg>
-      <Text size={'3'}>{message}</Text>
+      <Text size={{ initial: '1', xs: '2', sm: '3' }}>{message}</Text>
     </div>
   );
 };
