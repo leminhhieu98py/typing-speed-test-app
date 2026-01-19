@@ -3,7 +3,6 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { HeaderComponent } from '@/components/common';
 import { Theme } from '@radix-ui/themes';
 import { useEffect, useState } from 'react';
-import type { TRadixTheme } from '@typing/radix';
 import UserInfoDialog from '@/components/UserInfoDialog';
 import { useLocalStorage } from 'usehooks-ts';
 import type { TUserInfo } from '@/types/common';
@@ -17,9 +16,9 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
-  const [theme, setTheme] = useState<TRadixTheme>('light');
   const [userInfo, , removeUserInfo] = useLocalStorage<TUserInfo>('user-info', {});
   const isValidLocalStorage = userInfo.name && userInfo.gender;
+  const theme = userInfo.theme || 'light';
   const { p }: { p?: string } = useSearch({ strict: false });
   const [sharePayload] = useState(p);
 
@@ -48,10 +47,7 @@ function RootComponent() {
         radius='large'
       >
         <TypingContextProvider>
-          <HeaderComponent
-            theme={theme}
-            setTheme={setTheme}
-          />
+          <HeaderComponent theme={theme} />
           {!isValidLocalStorage && !sharePayload && <UserInfoDialog />}
           <ConfirmNavigateDialog />
           <Outlet />

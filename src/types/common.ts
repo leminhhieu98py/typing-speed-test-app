@@ -1,3 +1,5 @@
+import type { TRadixTheme } from '@typing/radix';
+
 export enum EDuration {
   '15_SECONDS' = '15',
   '30_SECONDS' = '30',
@@ -35,6 +37,7 @@ export type TResult = {
 export type TUserInfo = {
   name?: string;
   gender?: 'male' | 'female' | 'other';
+  theme?: TRadixTheme;
   difficulty?: EDifficulty;
   bestInfo?: Partial<Record<EDifficulty, TResult>>;
 } & TResult;
