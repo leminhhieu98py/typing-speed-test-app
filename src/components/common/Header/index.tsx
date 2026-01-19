@@ -1,6 +1,6 @@
 import type { TRadixTheme } from '@typing/radix';
 import { useActions } from './useActions';
-import { useContext, type Dispatch, type MouseEvent, type SetStateAction } from 'react';
+import { useContext, type MouseEvent } from 'react';
 import { Avatar, Card, Flex, IconButton, Strong, TabNav, Text, Tooltip } from '@radix-ui/themes';
 import { Logo } from '@/assets/images';
 import { Link, useLocation } from '@tanstack/react-router';
@@ -10,7 +10,6 @@ import { TypingContext, TypingDispatchContext } from '@/context/TypingContext';
 
 type THeaderComponentProps = {
   theme: TRadixTheme;
-  setTheme: Dispatch<SetStateAction<TRadixTheme>>;
 };
 
 type TRoute = { to: '/' | '/result' | '/insight'; label: string };
@@ -52,8 +51,8 @@ const TabNavLink = () => {
   ));
 };
 
-export const HeaderComponent = ({ theme, setTheme }: THeaderComponentProps) => {
-  const { handleChangeTheme, name, imageSrc } = useActions({ setTheme });
+export const HeaderComponent = ({ theme }: THeaderComponentProps) => {
+  const { handleChangeTheme, name, imageSrc } = useActions();
   const isDark = theme === 'dark';
 
   return (
