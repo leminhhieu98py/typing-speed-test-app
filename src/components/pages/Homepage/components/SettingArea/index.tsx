@@ -130,7 +130,7 @@ const SettingArea = memo(
                   Duration
                 </Text>
                 <SegmentedControl.Root
-                  defaultValue={EDuration['60_SECONDS']}
+                  defaultValue={EDuration['30_SECONDS']}
                   onValueChange={(value: EDuration) => setDuration(value)}
                   radius='large'
                   disabled={isStarted}
